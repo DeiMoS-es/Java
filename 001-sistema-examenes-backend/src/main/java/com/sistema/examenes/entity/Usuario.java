@@ -29,4 +29,7 @@ public class Usuario {
     //especifica claves ajenas en la relación
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
     private Set<UsuarioRol> usuarioRoles = new HashSet<>();
+
+    public Usuario() {
+    }
 }

@@ -15,6 +15,11 @@ public class Rol {
     @Id
     private Long rolId;
     private String nombre;
+    //Un rol pertenece a muchos usuarios
+    //Fetc->perezoso, para obtener las características/atributos hay que indicarlo
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "rol")
     private Set<UsuarioRol> usuarioRoles = new HashSet<>();
+
+    public Rol() {
+    }
 }

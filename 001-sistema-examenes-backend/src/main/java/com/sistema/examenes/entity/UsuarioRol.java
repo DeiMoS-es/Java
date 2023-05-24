@@ -1,8 +1,12 @@
 package com.sistema.examenes.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 public class UsuarioRol {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,6 +17,11 @@ public class UsuarioRol {
     // lanzará todo los registros relacionados
     @ManyToOne(fetch = FetchType.EAGER)
     private Usuario usuario;
+
+    //Muchos usuarios pertenecen a un rol
     @ManyToOne
     private Rol rol;
+
+    public UsuarioRol() {
+    }
 }
