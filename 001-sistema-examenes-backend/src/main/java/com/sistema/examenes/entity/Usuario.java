@@ -1,5 +1,6 @@
 package com.sistema.examenes.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,6 +29,7 @@ public class Usuario {
     //mappedBy -> apunta a la entidad propietaria de la relación,
     //especifica claves ajenas en la relación
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
+    @JsonIgnore
     private Set<UsuarioRol> usuarioRoles = new HashSet<>();
 
     public Usuario() {
