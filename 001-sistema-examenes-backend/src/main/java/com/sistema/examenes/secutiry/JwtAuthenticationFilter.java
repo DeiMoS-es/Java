@@ -44,10 +44,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         //validamos la peticion (request)
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null){//Si la autenticacion no es válida
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
-            if (this.jwtUtils.validateToken(jwtToken, userDetails)){//token y usuario
+            if (this.jwtUtils.validateToken(jwtToken, userDetails)){//token y usuario, apra comprobar si es válido
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+                SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+            }else{//Si no es válido
+                System.out.println("El token no es válido");
             }
+            filterChain.doFilter(request, response);//Ejecutamos el filtro
         }
     }
 }
