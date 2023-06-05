@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 @AllArgsConstructor
-public class UserDetailImpl implements UserDetails {
+public class UserDetailsImpl implements UserDetails {
 
     private final Usuario usuario;
     @Override
