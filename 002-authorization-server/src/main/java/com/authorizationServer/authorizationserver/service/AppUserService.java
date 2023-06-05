@@ -32,11 +32,11 @@ public class AppUserService {
         Set<Role> roles = new HashSet<>();
         dto.roles().forEach(r -> {
             Role role = repository.findByRole(RoleName.valueOf(r))
-                    .orElseThrow(()-> new RuntimeException("Role not found"));
+                    .orElseThrow(()-> new RuntimeException("role not found"));
             roles.add(role);
         });
         appUser.setRoles(roles);
         appUserRepository.save(appUser);
-        return new MessageDto(("user "+ appUser.getUsername() + " saved."));
+        return new MessageDto("user " + appUser.getUsername() + " saved");
     }
 }

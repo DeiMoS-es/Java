@@ -1,4 +1,4 @@
 package com.authorizationServer.authorizationserver.dto;
 
-public record MessageDto(String menssage) {
+public record MessageDto(String message) {
 }
