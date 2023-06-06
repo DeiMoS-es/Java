@@ -45,10 +45,17 @@ public class UsuarioController {
         return usuarioService.guardarUsuario(usuario, usuarioRols);
     }
 
-/*    @GetMapping("/buscar/{username}")
-    public Usuario obtenerUsuario(@PathVariable("username") String username){
-        return usuarioService.obtenerUsuarioUsername(username);
-    }*/
+    @GetMapping("/buscarNombre/{username}")
+    public ResponseEntity<UsuarioDTO> obtenerUsuario(@PathVariable("username") String username){
+        Usuario usuario = usuarioService.obtenerUsuarioUsername(username);
+        if(usuario != null){
+            UsuarioDTO usuarioDTO = UsuarioDTO.fromUsuario(usuario);
+            return ResponseEntity.ok(usuarioDTO);
+        }else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @GetMapping("/buscar/{id}")
     public ResponseEntity<UsuarioDTO> getUsuario(@PathVariable("id") Integer id){
         Optional<Usuario> optionalUsuario = usuarioRepository.findById(id);
