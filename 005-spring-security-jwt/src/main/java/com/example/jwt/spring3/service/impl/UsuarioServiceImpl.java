@@ -18,7 +18,8 @@ public class UsuarioServiceImpl implements UsuarioService {
     private final RolRepository rolRepository;
     @Override
     public Usuario guardarUsuario(Usuario usuario, Set<UsuarioRol> usuarioRols) throws Exception {
-        Usuario usuarioSave = usuarioRepository.findByUserName(usuario.getUserName()).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        Usuario usuarioSave = usuarioRepository.findByUserName(usuario.getUserName());
+        // TODO: 06/06/2023 añadir verificaciones de campos vacíos y codificar password 
         if (usuarioSave != null){
             System.out.println("El usuario ya existe");
             throw new Exception("El usuario ya está en la bbdd");
@@ -34,7 +35,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Usuario obtenerUsuarioUsername(String userName) {
-        return usuarioRepository.findByUserName(userName).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        return usuarioRepository.findByUserName(userName);
     }
 
     @Override
@@ -44,7 +45,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public void eliminarUsuarioUsername(String userName) {
-        Usuario usuario = usuarioRepository.findByUserName(userName).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        Usuario usuario = usuarioRepository.findByUserName(userName);
         usuarioRepository.deleteById(usuario.getIdUsuario());
     }
 }

@@ -12,13 +12,21 @@ import java.util.Set;
 @Getter
 @Setter
 public class Rol {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer rolId;
-
     private String nombreRol;
-
+    //Un rol pertenece a muchos usuarios
+    //Fetc->perezoso, para obtener las características/atributos hay que indicarlo
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "rol")
     private Set<UsuarioRol> usuarioRoles = new HashSet<>();
+
+    public Rol() {
+    }
+
+    public Rol(Integer rolId, String nombreRol, Set<UsuarioRol> usuarioRoles) {
+        this.rolId = rolId;
+        this.nombreRol = nombreRol;
+        this.usuarioRoles = usuarioRoles;
+    }
 }
