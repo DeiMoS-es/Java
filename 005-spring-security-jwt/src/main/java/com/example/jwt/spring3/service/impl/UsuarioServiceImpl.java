@@ -19,7 +19,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public Usuario guardarUsuario(Usuario usuario, Set<UsuarioRol> usuarioRols) throws Exception {
         Usuario usuarioSave = usuarioRepository.findByUserName(usuario.getUserName());
-        // TODO: 06/06/2023 añadir verificaciones de campos vacíos y codificar password 
+        // TODO: 06/06/2023 añadir verificaciones de campos vacíos y codificar password, añadir también que guarde un rol por defecto
         if (usuarioSave != null){
             System.out.println("El usuario ya existe");
             throw new Exception("El usuario ya está en la bbdd");

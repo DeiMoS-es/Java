@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
+import jakarta.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -22,12 +22,16 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idUsuario;
 
+    @NotNull
     private String userName;
+    @NotNull
     private String password;
+    @NotNull
     private String nombre;
     private String primerApellido;
     private String segundoApellido;
     private String telefono;
+    @NotNull
     private String email;
     private Date fechaAlta;
     private boolean enable = true;
