@@ -14,6 +14,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
+    private final JwtService jwtService;
 
     @Override
     protected void doFilterInternal(
@@ -23,10 +24,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         final String authHeader = request.getHeader("Authorization");
         final String jwt;
+        final String userEmail;
         if(authHeader == null || !authHeader.startsWith("Bearer "){
             filterChain.doFilter(request, response);
             return; //paramos la ejecución
         }
         jwt = authHeader.substring(7);//empieza en 7 porque contamos Bearer (contando el espacio)
+        userEmail = jwtService.extractUsername(jwt); //Todo extraer el userEmail desde el JWT token;
     }
 }
