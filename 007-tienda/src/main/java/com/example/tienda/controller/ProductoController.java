@@ -1,13 +1,16 @@
 package com.example.tienda.controller;
 
+import com.example.tienda.dto.ProductoDTO;
 import com.example.tienda.entity.Producto;
 import com.example.tienda.repository.ProductoRepository;
 import com.example.tienda.service.ProductoService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/productos")
@@ -24,8 +27,14 @@ public class ProductoController {
     }
 
     @GetMapping("buscar/{nombreProducto}")
-    public Producto buscarProducto (@PathVariable("nombreProducto") String nombreProducto){
-       return productoService.buscarProductoPorNombre(nombreProducto);
+    public ResponseEntity<ProductoDTO> buscarProductoNombre (@PathVariable("nombreProducto") String nombreProducto){
+        Optional<Producto> productoBuscado = productoRepository.findByNombreProducto(nombreProducto);
+        if(productoBuscado.isPresent()){
+            ProductoDTO productoDTO = ProductoDTO.fromProducto(productoBuscado);
+            return ResponseEntity.ok(productoDTO);
+        }else{
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping("/guardar")
