@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @Builder
@@ -34,7 +35,6 @@ public class Producto {
     @NotNull
     private Double cantidadProducto;
 
-    @ManyToOne
-    @JoinColumn (name = "pedido_id")
-    private Pedido pedido;
+    @ManyToMany(mappedBy = "productos")
+    private List<Pedido> pedidos;
 }

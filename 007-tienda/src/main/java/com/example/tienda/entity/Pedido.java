@@ -24,7 +24,14 @@ public class Pedido {
     @NotNull
     private String estado;
 
-    @OneToMany(mappedBy = "pedido", fetch = FetchType.LAZY)
+    @ManyToMany
+    @JoinTable(name = "pedido_producto",
+            joinColumns = @JoinColumn(name = "pedido_id"),
+            inverseJoinColumns = @JoinColumn(name = "producto_id"))
     private List<Producto> productos;
+
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
 
 }
