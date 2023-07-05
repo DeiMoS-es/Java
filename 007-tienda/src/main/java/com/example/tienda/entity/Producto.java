@@ -1,6 +1,7 @@
 package com.example.tienda.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,6 +30,9 @@ public class Producto {
     private Double ivaProducto;
 
     private String imgProducto;
+
+    @NotNull
+    private Double cantidadProducto;
 
     @ManyToOne
     @JoinColumn (name = "pedido_id")

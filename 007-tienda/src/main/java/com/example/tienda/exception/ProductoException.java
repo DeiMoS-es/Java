@@ -1,0 +1,8 @@
+package com.example.tienda.exception;
+
+public class ProductoException extends RuntimeException{
+    public ProductoException(String message) {
+        super(message);
+    }
+
+}
