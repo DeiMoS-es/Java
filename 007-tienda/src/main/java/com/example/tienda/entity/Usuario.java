@@ -56,4 +56,7 @@ public class Usuario {
             inverseJoinColumns = @JoinColumn(name = "rol_id")
     )
     private List<Rol> roles;
+
+    @OneToMany(mappedBy = "usuario")
+    private List<Pedido> pedidos;
 }
