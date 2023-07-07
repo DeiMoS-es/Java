@@ -2,7 +2,6 @@ package com.example.tienda.service.impl;
 
 import com.example.tienda.entity.Pedido;
 import com.example.tienda.exception.PedidoException;
-import com.example.tienda.exception.ProductoException;
 import com.example.tienda.repository.PedidoRepository;
 import com.example.tienda.service.PedidoService;
 import com.example.tienda.util.MensajesUtil;
@@ -40,6 +39,5 @@ public class PedidoServiceImpl implements PedidoService {
         }else {
             throw  new PedidoException("El pedido con ID: " + idPedido + "no existe.");
         }
-
     }
 }
