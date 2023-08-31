@@ -1,12 +1,15 @@
 package com.example.demojwt.Config;
 
+import com.example.demojwt.Jwt.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
  * Esta clase va a contener todos los filtros necesarios y el método security filter chain
@@ -18,6 +21,9 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final AuthenticationProvider authProvider;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
@@ -27,7 +33,12 @@ public class SecurityConfig {
                                 .requestMatchers("/auth/**").permitAll() //Todos los request que vayan por la ruta /auth (ej: login y registro) publicos
                                 .anyRequest().authenticated() //Cualquier otra request estarán protegidas
                 )
-                .formLogin(Customizer.withDefaults())//Llamamos al formulario por defecto que nos provee spring
+                .sessionManagement( sessionManager ->
+                        sessionManager
+                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authenticationProvider(authProvider)
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                //.formLogin(Customizer.withDefaults())//Llamamos al formulario por defecto que nos provee spring
                 .build();
     }
 }
