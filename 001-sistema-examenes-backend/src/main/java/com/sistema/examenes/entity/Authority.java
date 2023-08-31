@@ -9,7 +9,7 @@ public class Authority implements GrantedAuthority {
         this.authority = authority;
     }
 
-    //Básicamente este método e spara obtener un "rol"
+    //Básicamente este método es para obtener un "rol"
     @Override
     public String getAuthority() {
         return this.authority;

@@ -20,7 +20,7 @@ public class Contacto {
     private String nombre;
 
     @Column(name = "fechaNac")
-    private LocalDate fechaNcimiento;
+    private LocalDate fechaNacimiento;
 
     private String telefono;
     private String email;

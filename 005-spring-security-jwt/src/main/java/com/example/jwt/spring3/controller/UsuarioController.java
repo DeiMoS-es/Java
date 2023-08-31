@@ -31,7 +31,8 @@ public class UsuarioController {
 
     @PostMapping("/guardar")
     public Usuario guardarUsuario(@RequestBody Usuario usuario) throws Exception{
-        usuario.setPerfil("default.png");
+        //usuario.setPerfil("default.png");
+
         Set<UsuarioRol> usuarioRols = new HashSet<>();
         Rol rol = new Rol();
         rol.setRolId(1);;
@@ -45,7 +46,13 @@ public class UsuarioController {
         return usuarioService.guardarUsuario(usuario, usuarioRols);
     }
 
+    @PutMapping("")
+
     @GetMapping("/buscarNombre/{username}")
+    /*Para los métodos de buscar un usuario, he decidido usar un DTO ya ya que se va a
+     * mostrar información y hay campos como el de la contraseña o el de la fecha de alta
+     * que en principio no se quiere mostrar
+     */
     public ResponseEntity<UsuarioDTO> obtenerUsuario(@PathVariable("username") String username){
         Usuario usuario = usuarioService.obtenerUsuarioUsername(username);
         if(usuario != null){

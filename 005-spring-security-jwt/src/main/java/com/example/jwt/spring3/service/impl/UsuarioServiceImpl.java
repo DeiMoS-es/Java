@@ -7,7 +7,11 @@ import com.example.jwt.spring3.repository.UsuarioRepository;
 import com.example.jwt.spring3.service.UsuarioService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
+import java.time.LocalDateTime;
+
+import java.util.Date;
 import java.util.Set;
 
 @Service
@@ -27,8 +31,24 @@ public class UsuarioServiceImpl implements UsuarioService {
             for(UsuarioRol usuarioRol:usuarioRols){
                 rolRepository.save(usuarioRol.getRol());
             }
+            if(usuario.getUserName().isEmpty() || usuario.getUserName().isBlank()){
+                throw  new Exception("El nombre de usuario no puede estar vacío");
+            }
+            if(usuario.getPassword().isEmpty() || usuario.getPassword().isBlank()){
+                throw  new Exception("La contraseña no puede estar vacía");
+            }
+            if(usuario.getNombre().isEmpty() || usuario.getNombre().isBlank()){
+                throw  new Exception("El nombre no puede estar vacía");
+            }
+            if(usuario.getEmail().isEmpty() || usuario.getEmail().isBlank()){
+                throw  new Exception("El email no puede estar vacío");
+            }
+            usuario.setPerfil("default.png");
+            usuario.setFechaAlta(LocalDateTime.now());
             usuario.getUsuarioRoles().addAll(usuarioRols);
+            usuario.setPerfil("default.png");
             usuarioSave = usuarioRepository.save(usuario);
+
         }
         return usuarioSave;
     }

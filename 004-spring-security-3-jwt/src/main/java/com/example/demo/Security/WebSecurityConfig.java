@@ -28,10 +28,12 @@ public class WebSecurityConfig {
         jwtAuthenticationFilter.setFilterProcessesUrl("/login");
 
         return http
+                .cors()
+                .and()
                 .csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("contactos")
-                .permitAll()
+                //.requestMatchers("/api/contactos")
+                //.permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic()

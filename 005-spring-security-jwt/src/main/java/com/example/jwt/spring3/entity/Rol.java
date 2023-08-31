@@ -29,4 +29,12 @@ public class Rol {
         this.nombreRol = nombreRol;
         this.usuarioRoles = usuarioRoles;
     }
+
+    @Override
+    public String toString() {
+        return "Rol{" +
+                "rolId=" + rolId +
+                ", nombreRol='" + nombreRol + '\'' +
+                '}';
+    }
 }

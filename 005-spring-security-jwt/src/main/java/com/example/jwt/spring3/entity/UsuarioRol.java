@@ -19,4 +19,13 @@ public class UsuarioRol {
     //Muchos usuarios pertenecen a un rol
     @ManyToOne
     private Rol rol;
+
+    @Override
+    public String toString() {
+        return "UsuarioRol{" +
+                "usuarioRolId=" + usuarioRolId +
+                ", usuario=" + usuario +
+                ", rol=" + rol +
+                '}';
+    }
 }
