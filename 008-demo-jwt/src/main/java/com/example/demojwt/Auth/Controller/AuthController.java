@@ -13,7 +13,6 @@ public class AuthController {
     public String login(){
         return "Login from publick endpoint";
     }
-
     @PostMapping(value = "register")
     public String register(){
         return "Register from public endpoint";
