@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Task {
-    private Long id;
+    private Long idTask;
     private String title;
     private String description;
     private LocalDateTime creationDate;

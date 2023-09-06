@@ -11,3 +11,6 @@ Este proyecto es el primero utilizando arquitectura hexagonal
 
 ### Creamos los modelos
 - Dentro de domain/models, creamos AditionalTaskInfo y Tasks
+
+### Creamos las interfaces in
+- Dentro de la carpeta ports/in UpdateTaskUseCase, RetrieveTaskUseCase, DeleteTaskUseCase, GetAdditionalTaskInfoUseCase, CreateTaskUseCase
