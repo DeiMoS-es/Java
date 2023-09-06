@@ -12,5 +12,10 @@ Este proyecto es el primero utilizando arquitectura hexagonal
 ### Creamos los modelos
 - Dentro de domain/models, creamos AditionalTaskInfo y Tasks
 
-### Creamos las interfaces in
+### Creamos las interfaces in/out
 - Dentro de la carpeta ports/in UpdateTaskUseCase, RetrieveTaskUseCase, DeleteTaskUseCase, GetAdditionalTaskInfoUseCase, CreateTaskUseCase
+- Dentro de la carpeta ports/out ExternalServicePort, TaskRepositoryPort
+- Con estos pasos ya tendríamos finalizada la capa de dominio
+
+#### Continuamos con la capa de aplicación, en esta capa implementaremos la lógica de negocio
+### Creamos el services (taskService) y el usecases creamos las implementaciones de ports/in 
