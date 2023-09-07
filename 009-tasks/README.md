@@ -17,5 +17,9 @@ Este proyecto es el primero utilizando arquitectura hexagonal
 - Dentro de la carpeta ports/out ExternalServicePort, TaskRepositoryPort
 - Con estos pasos ya tendríamos finalizada la capa de dominio
 
-#### Continuamos con la capa de aplicación, en esta capa implementaremos la lógica de negocio
-### Creamos el services (taskService) y el usecases creamos las implementaciones de ports/in 
+### Continuamos con la capa de aplicación, en esta capa implementaremos la lógica de negocio
+#### Creamos el services (taskService) y el usecases creamos las implementaciones de ports/in 
+#### Implementamos todos los usecases, con sus respectivos métodos definidos en las interfaces
+
+### Continuamos con la capa de infraestructura
+#### Empezamos creando las clases TaskEntity, los repositorios, el controllador, la configuracion y los adaptadores

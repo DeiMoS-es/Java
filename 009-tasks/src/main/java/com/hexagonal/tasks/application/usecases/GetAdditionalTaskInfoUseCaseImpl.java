@@ -1,4 +1,19 @@
 package com.hexagonal.tasks.application.usecases;
 
-public class GetAdditionalTaskInfoUseCaseImpl {
+import com.hexagonal.tasks.domain.models.AdditionalTaskInfo;
+import com.hexagonal.tasks.domain.ports.in.GetAdditionalTaskInfoUseCase;
+import com.hexagonal.tasks.domain.ports.out.ExternalServicePort;
+import com.hexagonal.tasks.domain.ports.out.TaskRepositoryPort;
+
+public class GetAdditionalTaskInfoUseCaseImpl implements GetAdditionalTaskInfoUseCase {
+    private final ExternalServicePort externalServicePort;
+
+    public GetAdditionalTaskInfoUseCaseImpl(TaskRepositoryPort taskRepositoryPort, ExternalServicePort externalServicePort) {
+        this.externalServicePort = externalServicePort;
+    }
+
+    @Override
+    public AdditionalTaskInfo getAdditionalTaskInfo(Long userId) {
+        return externalServicePort.getAdditionalTaskInfo(userId);
+    }
 }
