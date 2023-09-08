@@ -18,8 +18,9 @@ Este proyecto es el primero utilizando arquitectura hexagonal
 - Con estos pasos ya tendríamos finalizada la capa de dominio
 
 ### Continuamos con la capa de aplicación, en esta capa implementaremos la lógica de negocio
-#### Creamos el services (taskService) y el usecases creamos las implementaciones de ports/in 
-#### Implementamos todos los usecases, con sus respectivos métodos definidos en las interfaces
+- Creamos el services (taskService) y el usecases creamos las implementaciones de ports/in 
+- Implementamos todos los usecases, con sus respectivos métodos definidos en las interfaces
 
 ### Continuamos con la capa de infraestructura
-#### Empezamos creando las clases TaskEntity, los repositorios, el controllador, la configuracion y los adaptadores
+- Empezamos creando las clases TaskEntity, los repositorios, el controllador, la configuracion y los adaptadores
+- Para el entity TaskEntity uso anotaciones de loombok para reducir el código, con @Data evito crear el código de setters y getters, con @AllArgsConstructor evitamos crear el código para el constructor con todos los parámetros y con @NoArgsConstructor evitamos crear el código para el constructor sin parámetros
