@@ -38,13 +38,9 @@ public class Producto {
     private String nombreProducto;
 
     @NotNull
-    @NotEmpty
-    @NotBlank
     private Double precioProducto;
 
     @NotNull
-    @NotEmpty
-    @NotBlank
     private Double ivaProducto;
 
     private LocalDateTime fechaAlta;

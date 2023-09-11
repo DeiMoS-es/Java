@@ -6,7 +6,10 @@ import com.apiRest.producto.exception.ProductoException;
 import com.apiRest.producto.repository.ProductoRepository;
 import com.apiRest.producto.service.ProductoService;
 import com.apiRest.producto.util.MensajeUtil;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -36,17 +39,30 @@ public class ProductoServiceImpl implements ProductoService {
     }
 
     @Override
-    public void editarProducto(Long idProducto, ProductoDTO productoDTO) {
+    public ResponseEntity<?> editarProducto(Long idProducto, ProductoDTO productoDTO) {
         Optional<Producto> optionalProducto = productoRepository.findById(idProducto);
+        System.out.println(optionalProducto);
         if(optionalProducto.isPresent()){
             Producto productoActualizado = optionalProducto.get();
             if(productoDTO.getNombreProducto().equals("") || productoDTO.getNombreProducto().isEmpty() || productoDTO.getNombreProducto() == null){
                 //Si no viene nombre ponemos el que ya estaba
                 productoActualizado.setNombreProducto(optionalProducto.get().getNombreProducto());
+                productoActualizado.setPrecioProducto(productoDTO.getPrecioProducto());
+                productoActualizado.setPrecioProducto(productoDTO.getPrecioProducto());
+                productoRepository.save(productoActualizado);
+                return ResponseEntity.ok(ProductoDTO.fromProducto(productoActualizado));
+            }//TODO faltaría por añadir el resto de validaciones, para precio e iva
+            else {
+                productoActualizado.setNombreProducto(productoDTO.getNombreProducto());
+                productoActualizado.setPrecioProducto(productoDTO.getPrecioProducto());
+                productoActualizado.setPrecioProducto(productoDTO.getPrecioProducto());
+                productoRepository.save(productoActualizado);
+                return ResponseEntity.ok(ProductoDTO.fromProducto(productoActualizado));
             }
-        } else {
-            throw new ProductoException("El producto con ID: " + idProducto + " no existe");
         }
+        String mensajeError = "El producto con ID: " + idProducto + " no se ha encontrado.";
+        MensajeUtil.mensajeError(mensajeError);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(mensajeError);
     }
 
     @Override
@@ -61,19 +77,29 @@ public class ProductoServiceImpl implements ProductoService {
     }
 
     @Override
-    public void eliminarProducto(Long idProducto) {
-       Optional<Producto> optionalProducto = productoRepository.findById(idProducto);
-       if(optionalProducto.isPresent()){
-           productoRepository.deleteById(idProducto);
-           MensajeUtil.mensajeConfirmacion("Producto eliminado con éxito");
-       }else {
-           optionalProducto.orElseThrow(()-> new NoSuchElementException("Producto con ID: " + idProducto + " no ecnontrado"));
-       }
+    public ResponseEntity<?> eliminarProducto(Long idProducto) {
+        Optional<Producto> optionalProducto = productoRepository.findById(idProducto);
+        if(optionalProducto.isPresent()){
+            productoRepository.deleteById(idProducto);
+            String mensajeOk = "El producto con ID: " + idProducto + " se ha eliminado.";
+            MensajeUtil.mensajeConfirmacion(mensajeOk);
+            return ResponseEntity.status(HttpStatus.OK).body(mensajeOk);
+        }else {
+            String mensajeError = "El producto con ID: " + idProducto + " no se ha encontrado.";
+            MensajeUtil.mensajeError(mensajeError);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(mensajeError);
+        }
     }
 
     @Override
-    public Producto buscarProductoPorNombre(String nombreProducto) {
+    public ResponseEntity<?> buscarProductoPorNombre(String nombreProducto) {
         Optional<Producto> optionalProducto = productoRepository.findByNombreProducto(nombreProducto);
-        return optionalProducto.orElseThrow(() -> new NoSuchElementException("Producto con nombre: " + nombreProducto + " no encontrado."));
+        if (optionalProducto.isPresent()){
+            return ResponseEntity.ok(optionalProducto.get());
+        }else {
+            String mensajeError = "El producto con nombre: " + nombreProducto + " no se ha encontrado.";
+            MensajeUtil.mensajeError(mensajeError);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(mensajeError);
+        }
     }
 }
