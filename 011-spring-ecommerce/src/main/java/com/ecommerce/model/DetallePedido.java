@@ -24,6 +24,6 @@ public class DetallePedido {
     /**
      * Relación con productos, en producto no es necesario conocer el detalle del pedido
      */
-    @OneToOne
+    @ManyToOne
     private Producto producto;
 }
