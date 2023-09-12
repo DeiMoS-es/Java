@@ -1,5 +1,6 @@
 package com.apiRest.producto.entity;
 
+import com.apiRest.pedido.entity.Pedido;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -10,6 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * con la anotación @Builder, conseguimos construir los objetos de manera inmutable y de una forma,
@@ -44,5 +46,8 @@ public class Producto {
     private Double ivaProducto;
 
     private LocalDateTime fechaAlta;
+
+    @ManyToMany(mappedBy = "productos")
+    private List<Pedido> pedidos;
 
 }
