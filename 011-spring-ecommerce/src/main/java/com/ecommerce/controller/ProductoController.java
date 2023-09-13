@@ -1,6 +1,9 @@
 package com.ecommerce.controller;
 
 import com.ecommerce.model.Producto;
+import com.ecommerce.model.Usuario;
+import com.ecommerce.service.ProductoService;
+import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -10,9 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/productos")
+@AllArgsConstructor
 public class ProductoController {
 
     private final Logger LOGGER = LoggerFactory.getLogger(ProductoController.class);
+
+    private final ProductoService productoService;
 
     @GetMapping("")
     public String show(){
@@ -27,6 +33,9 @@ public class ProductoController {
     @PostMapping("/save")
     public String save(Producto producto){
         LOGGER.info("Este es el objeto producto {}", producto);
+        Usuario u = new Usuario(1, "","","","","","","");
+        producto.setUsuario(u);
+        productoService.saveProducto(producto);
         return "redirect:/productos";
     }
 }
