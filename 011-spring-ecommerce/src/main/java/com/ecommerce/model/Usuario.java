@@ -49,4 +49,18 @@ public class Usuario {
         this.tipo = tipo;
         this.password = password;
     }
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "idUsuario=" + idUsuario +
+                ", nombre='" + nombre + '\'' +
+                ", userName='" + userName + '\'' +
+                ", email='" + email + '\'' +
+                ", direccion='" + direccion + '\'' +
+                ", telefono='" + telefono + '\'' +
+                ", tipo='" + tipo + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }
