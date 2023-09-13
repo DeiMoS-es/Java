@@ -3,13 +3,16 @@ package com.ecommerce.controller;
 import com.ecommerce.model.Producto;
 import com.ecommerce.model.Usuario;
 import com.ecommerce.service.ProductoService;
+import com.ecommerce.service.UploadFileService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Optional;
 
 @Controller
@@ -21,9 +24,11 @@ public class ProductoController {
 
     private final ProductoService productoService;
 
+    private final UploadFileService uploadFileService;
+
     @GetMapping("")
     public String show(Model model){
-        //Model se importa de: import org.springframework.ui.Model;
+        // Model se importa de: import org.springframework.ui.Model;
         // Los objetos de tipo Model se encargan de mandar objetos a la vista correspondiente
         // Este método recibe un parámetro (nombre/varibale) en la que se val a "almacenar" los datos, en este caso una lista dr proudctos
         // Y el segundo parámetro es la información, la variable o el objeto que tiene la información
@@ -37,10 +42,26 @@ public class ProductoController {
     }
 
     @PostMapping("/save")
-    public String save(Producto producto){
+    public String save(Producto producto, @RequestParam("img") MultipartFile multipartFile) throws IOException {
         LOGGER.info("Este es el objeto producto {}", producto);
         Usuario u = new Usuario(1, "","","","","","","");
         producto.setUsuario(u);
+        // Lógica para subir imagenes al servidor
+        if(producto.getImagen() == null){//cuando se crea un producto
+            String nombreImagen = uploadFileService.saveImage(multipartFile);
+            producto.setImagen(nombreImagen);
+        } else{
+            //Cuando editamos un producto y no cargamos la imagen, ya que si no se añade la imagen, cuando guardemos el producto vendrá a null
+            if(multipartFile.isEmpty()){
+                Producto p = new Producto();
+                p = productoService.getProducto(producto.getIdProducto()).get();
+                producto.setImagen(p.getImagen());//producto nos llega desde la vista
+            } else {
+                //Obtenemos la imagen nueva al editar
+                String nombreImagen = uploadFileService.saveImage(multipartFile);
+                producto.setImagen(nombreImagen);
+            }
+        }
         productoService.saveProducto(producto);
         return "redirect:/productos";
     }
