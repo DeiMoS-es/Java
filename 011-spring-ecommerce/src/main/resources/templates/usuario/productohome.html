@@ -42,6 +42,8 @@
             </div>
             <div class="col-lg-6">
               <form th:action="@{/cart}" method="POST">
+                <!-- Almacenamos en un campo oculto el idProducto, para luego operar con el en el carrito -->
+                <input type="hidden" th:value="${producto.idProducto}" name="idProducto">
                 <h2 class="card-title" th:text="${producto.nombre}"></h2>
                 <ul class="list-group">
                   <li class="list-group-item"><h5 th:text="'Precio:' + ${producto.precio}"> </h5></li>

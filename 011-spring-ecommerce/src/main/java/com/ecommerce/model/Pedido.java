@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 @Data
@@ -11,6 +12,9 @@ import java.util.Date;
 @AllArgsConstructor
 @Entity
 @Table(name = "pedidos")
+//Me obliga a añadir esta anotación para poder inyectar pedidos en los controladores
+//Con esta anotación Spring gestionará el ciclo de vida de los Pedidos y creará instancias cuando crea necesario, según se haga uso de la clase en la aplicación
+@Component
 public class Pedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

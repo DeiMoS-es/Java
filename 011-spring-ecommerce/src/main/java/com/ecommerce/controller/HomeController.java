@@ -1,6 +1,8 @@
 
 package com.ecommerce.controller;
 
+import com.ecommerce.model.DetallePedido;
+import com.ecommerce.model.Pedido;
 import com.ecommerce.model.Producto;
 import com.ecommerce.service.ProductoService;
 import lombok.AllArgsConstructor;
@@ -8,11 +10,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -22,6 +23,11 @@ public class HomeController {
 
     private final ProductoService productoService;
     private final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
+
+    //Variable para almacenar los detalles del pedido
+    List<DetallePedido> detallesPedido = new ArrayList<DetallePedido>();
+    //Almacenamos los datos del pedido
+    Pedido pedido = new Pedido();
     @GetMapping
     public String home(Model model){
         model.addAttribute("productos", productoService.findAll());
@@ -38,7 +44,14 @@ public class HomeController {
     }
 
     @PostMapping("/cart")
-    public String addCart(){
+    public String addCart(@RequestParam("idProducto") Integer idProducto, @RequestParam("cantidad") Integer cantidad){
+        DetallePedido detallePedido = new DetallePedido();
+        Producto producto = new Producto();
+        double sumaTotal = 0;
+        Optional<Producto> optionalProducto = productoService.getProducto(idProducto);
+        producto = optionalProducto.get();
+        LOGGER.info("El producto añadido: {}", producto);
+        LOGGER.info("Cantidad: {}", cantidad);
         return "usuario/carrito";
     }
 }
