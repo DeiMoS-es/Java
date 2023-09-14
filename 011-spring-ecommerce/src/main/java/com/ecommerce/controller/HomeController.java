@@ -65,4 +65,20 @@ public class HomeController {
         model.addAttribute("pedido", pedido);//Pasamos solo el total
         return "usuario/carrito";
     }
+
+    //Eliminar producto del carrito
+    @GetMapping("/delete/cart/{idProducto}")
+    public String deleteProductCart(@PathVariable("idProducto") Integer idProducto, Model model){
+        //Recorro mi lista con todos los productos, comparo el id del producto con el que llega por parámetro
+        //si coincide elimino el producto
+        detallesPedido.removeIf(detallePedido -> detallePedido.getProducto().getIdProducto() == idProducto);
+        double sumaTotal = detallesPedido.stream()
+                .mapToDouble(DetallePedido::getTotal)
+                .sum();
+        pedido.setTotal(sumaTotal);
+        model.addAttribute("cart", detallesPedido);
+        model.addAttribute("pedido", pedido);
+
+        return "usuario/carrito";
+    }
 }
