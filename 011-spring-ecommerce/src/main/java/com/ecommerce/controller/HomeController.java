@@ -55,9 +55,13 @@ public class HomeController {
         detallePedido.setTotal(producto.getPrecio()*cantidad);
         detallePedido.setNombre(producto.getNombre());
         detallePedido.setProducto(producto);
-        //añadimos el producto a la lista
-        detallesPedido.add(detallePedido);
 
+        //Validación para saber si el producto ya está agregado
+        if(!detallesPedido.stream().anyMatch(p -> p.getProducto().getIdProducto()==idProducto)){
+            //añadimos el producto a la lista
+            detallesPedido.add(detallePedido);
+        }
+        //TODO faltaría implementar que si el producto ya existe, sume la cantidad y el precio del producto actualizado
         sumaTotal = detallesPedido.stream().mapToDouble(dt -> dt.getTotal()).sum();
         pedido.setTotal(sumaTotal);//Añadimos al pedido el total de la suma
         LOGGER.info("Detalles de pedido: {}", detallesPedido);
@@ -79,6 +83,14 @@ public class HomeController {
         model.addAttribute("cart", detallesPedido);
         model.addAttribute("pedido", pedido);
 
+        return "usuario/carrito";
+    }
+
+    //recuperar el carrito desde cualquier parte
+    @GetMapping("/getCart")
+    public String getCart(Model model){
+        model.addAttribute("cart", detallesPedido);
+        model.addAttribute("pedido", pedido);
         return "usuario/carrito";
     }
 }
