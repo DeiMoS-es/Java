@@ -96,13 +96,13 @@ public class ProductoServiceImpl implements ProductoService {
         Optional<Producto> optionalProducto = productoRepository.findById(idProducto);
         if(optionalProducto.isPresent()){
             productoRepository.deleteById(idProducto);
-            String mensajeOk = "El producto con ID: " + idProducto + " se ha eliminado.";
+            String mensajeOk = "El producto: " + optionalProducto.get().getNombreProducto() + " se ha eliminado.";
             MensajeUtil.mensajeConfirmacion(mensajeOk);
-            return ResponseEntity.status(HttpStatus.OK).body(mensajeOk);
+            return ResponseEntity.status(HttpStatus.OK).body("{\"mensaje\": \"" + mensajeOk + "\"}");
         }else {
-            String mensajeError = "El producto con ID: " + idProducto + " no se ha encontrado.";
+            String mensajeError = "El producto: " + optionalProducto.get().getNombreProducto() + " no se ha encontrado.";
             MensajeUtil.mensajeError(mensajeError);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(mensajeError);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"mensaje\": \"" + mensajeError + "\"}");
         }
     }
 

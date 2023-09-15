@@ -20,7 +20,6 @@ import java.util.Optional;
 @AllArgsConstructor
 public class ProductoController {
 
-    private final ProductoRepository productoRepository;
     private final ProductoService productoService;
 
     @PostMapping("/guardar")
