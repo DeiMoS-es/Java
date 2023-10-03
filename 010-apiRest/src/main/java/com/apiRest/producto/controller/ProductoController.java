@@ -16,11 +16,12 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/productos")
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:4200")
 @AllArgsConstructor
 public class ProductoController {
 
     private final ProductoService productoService;
+    private final ProductoRepository productoRepository;
 
     @PostMapping("/guardar")
     public Producto guardarProducto(@RequestBody Producto producto){
@@ -46,5 +47,11 @@ public class ProductoController {
     @DeleteMapping("eliminar/{idProducto}")
     public ResponseEntity<?> eliminarProducto(@PathVariable("idProducto") Long idProducto){
         return productoService.eliminarProducto(idProducto);
+    }
+
+    @GetMapping("buscarEnTiempoReal/{nombreProducto}")
+    public ResponseEntity<?> buscarEnTiempoReal(@PathVariable("nombreProducto") String nombreProducto) {
+        List<Producto> productos = productoRepository.findByNombreProductoContaining(nombreProducto);
+        return ResponseEntity.ok(productos);
     }
 }
