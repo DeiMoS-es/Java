@@ -43,7 +43,6 @@ public class ProductoServiceImpl implements ProductoService {
             throw new ProductoException("El producto con el nombre: " + producto.getNombreProducto() + " ya existe");
         }
     }
-
     @Override
     public ResponseEntity<?> editarProducto(Long idProducto, ProductoDTO productoDTO) {
         Optional<Producto> optionalProducto = productoRepository.findById(idProducto);

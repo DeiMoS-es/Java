@@ -22,7 +22,7 @@ public class PedidoDTO {
         PedidoDTO dto = new PedidoDTO();
         dto.setFechaPedido(pedido.getFechaPedido());
         dto.setEstado(pedido.getEstado());
-        dto.setProductos(pedido.getProductos());
+        //dto.setProductos(pedido.getProductos());
         return dto;
     }
 }

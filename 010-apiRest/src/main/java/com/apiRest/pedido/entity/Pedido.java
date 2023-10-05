@@ -1,5 +1,6 @@
 package com.apiRest.pedido.entity;
 
+import com.apiRest.detallePedido.entity.DetallePedido;
 import com.apiRest.producto.entity.Producto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -27,18 +28,9 @@ public class Pedido {
     @NotNull
     private String estado;
 
-    /**
-     * Establece una relación muchos a muchos entre los pedidos y los productos.
-     * Utiliza una tabla de unión llamada "pedido_producto" para mantener las relaciones.
-     *
-     * @ManyToMany indica que un pedido puede tener varios productos y un producto puede estar en varios pedidos.
-     * @JoinTable se utiliza para especificar el nombre de la tabla de unión y cómo se relacionarán las columnas.
-     * - name = "pedido_producto" define el nombre de la tabla de unión en la base de datos.
-     * - joinColumns especifica cómo se mapearán las columnas de la entidad "Pedido" en la tabla de unión.
-     * - inverseJoinColumns especifica cómo se mapearán las columnas de la entidad "Producto" en la tabla de unión.
-     *
-     * @return Una lista de productos asociados a este pedido.
-     */
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DetallePedido> detallesPedido;
+
     @ManyToMany
     @JoinTable(name = "producto_pedido", joinColumns = @JoinColumn(name = "id_pedido"), inverseJoinColumns = @JoinColumn(name = "id_producto"))
     private List<Producto> productos;

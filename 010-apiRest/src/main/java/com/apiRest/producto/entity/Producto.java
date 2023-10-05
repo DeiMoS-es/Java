@@ -1,6 +1,8 @@
 package com.apiRest.producto.entity;
 
+import com.apiRest.detallePedido.entity.DetallePedido;
 import com.apiRest.pedido.entity.Pedido;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -50,7 +52,8 @@ public class Producto {
 
     private LocalDateTime fechaAlta;
 
-    @ManyToMany(mappedBy = "productos")
-    private List<Pedido> pedidos;
+    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore  // Evitar que se serialice esta propiedad
+    private List<DetallePedido> detallesPedido;
 
 }

@@ -12,10 +12,12 @@ import java.util.Optional;
 @AllArgsConstructor
 public class ProductoDTO {
 
+    private Long idProducto;
     private String nombreProducto;
     private Double precioProducto;
     private Double ivaProducto;
     private Integer stockProducto;
+    private Integer cantidad;
 
     public static ProductoDTO fromProducto(Producto producto){
         ProductoDTO dto = new ProductoDTO();
