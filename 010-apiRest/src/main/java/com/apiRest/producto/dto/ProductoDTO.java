@@ -15,12 +15,14 @@ public class ProductoDTO {
     private String nombreProducto;
     private Double precioProducto;
     private Double ivaProducto;
+    private Integer stockProducto;
 
     public static ProductoDTO fromProducto(Producto producto){
         ProductoDTO dto = new ProductoDTO();
         dto.setNombreProducto(producto.getNombreProducto());
         dto.setPrecioProducto(producto.getPrecioProducto());
         dto.setIvaProducto(producto.getIvaProducto());
+        dto.setStockProducto(producto.getStockProducto());
         return dto;
     }
 }

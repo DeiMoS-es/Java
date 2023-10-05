@@ -40,7 +40,7 @@ public class Pedido {
      * @return Una lista de productos asociados a este pedido.
      */
     @ManyToMany
-    @JoinTable(name = "pedido_producto", joinColumns = @JoinColumn(name = "id_pedido"), inverseJoinColumns = @JoinColumn(name = "id_producto"))
+    @JoinTable(name = "producto_pedido", joinColumns = @JoinColumn(name = "id_pedido"), inverseJoinColumns = @JoinColumn(name = "id_producto"))
     private List<Producto> productos;
 
     //TODO cuando termine todo lo relacionado con el pedido, tendré que añadir el sistema de usuarios, roles y autenticación y autorización

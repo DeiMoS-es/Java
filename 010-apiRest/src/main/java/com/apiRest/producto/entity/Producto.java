@@ -45,6 +45,9 @@ public class Producto {
     @NotNull
     private Double ivaProducto;
 
+    @NotNull
+    private Integer stockProducto;
+
     private LocalDateTime fechaAlta;
 
     @ManyToMany(mappedBy = "productos")

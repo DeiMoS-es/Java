@@ -29,8 +29,12 @@ public class ProductoServiceImpl implements ProductoService {
             }
             if(producto.getPrecioProducto() == null || producto.getPrecioProducto().equals("")){
                 throw new ProductoException("El precio es nulo o vacío");
-            } if(producto.getIvaProducto() == null || producto.getIvaProducto().equals("")){
+            }
+            if(producto.getIvaProducto() == null || producto.getIvaProducto().equals("")){
                 producto.setIvaProducto(4.0);
+            }
+            if(producto.getStockProducto() == null || producto.getStockProducto().equals("")){
+                throw new ProductoException("El stock es nulo o vacio");
             }
             producto.setFechaAlta(LocalDateTime.now());
             productoRepository.save(producto);
@@ -50,6 +54,7 @@ public class ProductoServiceImpl implements ProductoService {
                 productoActualizado.setNombreProducto(optionalProducto.get().getNombreProducto());
                 productoActualizado.setPrecioProducto(productoDTO.getPrecioProducto());
                 productoActualizado.setIvaProducto(productoDTO.getIvaProducto());
+                productoActualizado.setStockProducto(productoDTO.getStockProducto());
                 productoRepository.save(productoActualizado);
                 return ResponseEntity.ok(ProductoDTO.fromProducto(productoActualizado));
             } if( productoDTO.getPrecioProducto() == null){
@@ -57,6 +62,7 @@ public class ProductoServiceImpl implements ProductoService {
                 productoActualizado.setNombreProducto(productoDTO.getNombreProducto());
                 productoActualizado.setPrecioProducto(optionalProducto.get().getPrecioProducto());
                 productoActualizado.setIvaProducto(productoDTO.getIvaProducto());
+                productoActualizado.setStockProducto(productoDTO.getStockProducto());
                 productoRepository.save(productoActualizado);
                 return ResponseEntity.ok(ProductoDTO.fromProducto(productoActualizado));
             } if(productoDTO.getIvaProducto() == null){
@@ -64,12 +70,22 @@ public class ProductoServiceImpl implements ProductoService {
                 productoActualizado.setNombreProducto(productoDTO.getNombreProducto());
                 productoActualizado.setPrecioProducto(productoDTO.getPrecioProducto());
                 productoActualizado.setIvaProducto(optionalProducto.get().getIvaProducto());
+                productoActualizado.setStockProducto(productoDTO.getStockProducto());
+                productoRepository.save(productoActualizado);
+                return ResponseEntity.ok(ProductoDTO.fromProducto(productoActualizado));
+            } if(productoDTO.getStockProducto() == null){
+                //Si no viene el stock ponemos el que ya estaba
+                productoActualizado.setNombreProducto(productoDTO.getNombreProducto());
+                productoActualizado.setPrecioProducto(productoDTO.getPrecioProducto());
+                productoActualizado.setIvaProducto(productoDTO.getIvaProducto());
+                productoActualizado.setStockProducto(optionalProducto.get().getStockProducto());
                 productoRepository.save(productoActualizado);
                 return ResponseEntity.ok(ProductoDTO.fromProducto(productoActualizado));
             } else {
                 productoActualizado.setNombreProducto(productoDTO.getNombreProducto());
                 productoActualizado.setPrecioProducto(productoDTO.getPrecioProducto());
                 productoActualizado.setIvaProducto(productoDTO.getIvaProducto());
+                productoActualizado.setStockProducto(productoDTO.getStockProducto());
                 productoRepository.save(productoActualizado);
                 return ResponseEntity.ok(ProductoDTO.fromProducto(productoActualizado));
             }
