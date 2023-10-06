@@ -19,7 +19,6 @@ import java.util.List;
 public class PedidoController {
 
     private final PedidoService pedidoService;
-    private final PedidoRepository pedidoRepository;
 
     @PostMapping("/guardar")
     public ResponseEntity<Pedido> guardarPedido(@RequestBody List<ProductoDTO> listaProductos){
