@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/pedidos")
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:4200")
 @AllArgsConstructor
 public class PedidoController {
 
