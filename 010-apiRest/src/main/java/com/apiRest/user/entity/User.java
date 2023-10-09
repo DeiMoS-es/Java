@@ -17,14 +17,14 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "user", uniqueConstraints = {@UniqueConstraint(columnNames = {"username"})})
+@Table(name = "user", uniqueConstraints = {@UniqueConstraint(columnNames = {"userName"})})
 public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer idUser;
     @Column(nullable = false)
-    String userName;
+    String userName;//Como le estoy dando un nombre distinto a username, me obliga a sobreescribir el método getUsername
     String lastName;
     String firstName;
     String country;
@@ -39,7 +39,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return null;
+        return this.userName; // Devuelve el valor del campo userName
     }
     // Para esta ocasión todos los métodos que devuelven un boolean
     // los ponemos por defecto a true, ya que el propio token contiene

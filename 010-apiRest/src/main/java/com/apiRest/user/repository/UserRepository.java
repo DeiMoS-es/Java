@@ -7,6 +7,5 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
     //queryMethod
-    //TODO revisar este queryMethod, ya que en el entity de usuario se identifica con userName
     Optional<User> findByUserName(String userName);
 }
