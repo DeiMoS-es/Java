@@ -8,9 +8,13 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.CorsConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+
+import java.util.List;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -25,6 +29,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         return http
+                .cors(Customizer.withDefaults())
                 .csrf(csrf -> csrf.disable())//Esta es la nueva forma de desactivar el csrf, pasandole una función lambda, es una medida de seguridad que se utiliza para agregar a las solicitudes post un csrf valido
                 .authorizeHttpRequests(authRequest ->
                         authRequest
@@ -38,5 +43,16 @@ public class SecurityConfig {
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 //.formLogin(withDefaults()) //basica de springsecurity
                 .build();
+    }
+
+    private Customizer<CorsConfigurer> corsCustomizer() {
+        return cors -> {
+            cors.configurationSource(request -> {
+                CorsConfiguration config = new CorsConfiguration();
+                config.setAllowedOrigins(List.of("http://localhost:4200"));
+                config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
+                return config;
+            });
+        };
     }
 }

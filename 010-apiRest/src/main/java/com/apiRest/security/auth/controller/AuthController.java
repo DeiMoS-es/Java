@@ -6,13 +6,11 @@ import com.apiRest.security.entity.RegisterRequest;
 import com.apiRest.security.services.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
+@CrossOrigin(origins = "http://localhost:4200")
 @RequiredArgsConstructor
 public class AuthController {
 
@@ -20,6 +18,9 @@ public class AuthController {
 
     @PostMapping(value = "login")
     public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request){
+        System.out.println("----------------------------------------");
+        System.out.println(authService.login(request));
+        System.out.println("----------------------------------------");
         return ResponseEntity.ok(authService.login(request));
     }
 
