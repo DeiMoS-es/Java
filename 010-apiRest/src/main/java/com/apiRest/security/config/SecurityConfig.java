@@ -26,6 +26,15 @@ public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final AuthenticationProvider authenticationProvider;
+    /*
+    *  http
+            .authorizeHttpRequests((authz) -> authz
+                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                .requestMatchers("/api/user/**").hasRole("USER")
+                .anyRequest().authenticated()
+            );
+        return http.build();
+    * */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         return http
@@ -34,6 +43,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authRequest ->
                         authRequest
                                 .requestMatchers("/productos/guardar").hasAuthority("ADMIN")
+                                .requestMatchers("/productos/todos").hasAuthority("USER")
                                 .requestMatchers("/auth/**").permitAll() // Estas serán públicas, porque así lo hemos decidido
                                 .anyRequest().authenticated() // Para el resto pedimos authentication
                                 )
