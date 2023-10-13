@@ -30,11 +30,12 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         return http
                 .cors(Customizer.withDefaults())
-                .csrf(csrf -> csrf.disable())//Esta es la nueva forma de desactivar el csrf, pasandole una función lambda, es una medida de seguridad que se utiliza para agregar a las solicitudes post un csrf valido
+                .csrf(csrf -> csrf.disable())//Esta es la nueva forma de desactivar el csrf, pasándole una función lambda, es una medida de seguridad que se utiliza para agregar a las solicitudes post un csrf valido
                 .authorizeHttpRequests(authRequest ->
                         authRequest
-                                .requestMatchers("/auth/**").permitAll() // Estas serán publicas, porque así lo hemos decidido
-                                .anyRequest().authenticated() // Para el resto pedimos authenticación
+                                .requestMatchers("/productos/guardar").hasAuthority("ADMIN")
+                                .requestMatchers("/auth/**").permitAll() // Estas serán públicas, porque así lo hemos decidido
+                                .anyRequest().authenticated() // Para el resto pedimos authentication
                                 )
                 .sessionManagement(sessionManager ->
                         sessionManager
