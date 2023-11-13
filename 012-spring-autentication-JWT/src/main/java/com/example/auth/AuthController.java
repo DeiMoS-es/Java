@@ -1,4 +1,4 @@
-package com.example.Auth;
+package com.example.auth;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
