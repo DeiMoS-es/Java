@@ -1,5 +1,6 @@
 package com.example.user.service.impl;
 
+import com.example.user.dto.UserDTO;
 import com.example.user.entity.User;
 import com.example.user.repository.UserRepository;
 import com.example.user.service.UserService;
@@ -18,7 +19,14 @@ public class UserServiceImpl implements UserService {
     public ResponseEntity<?> buscarPorNombre(String userName) {
         Optional<User> optionalUser = userRepository.findByUsername(userName);
         if(optionalUser.isPresent()){
-            return ResponseEntity.ok(optionalUser.get());
+            UserDTO userDTO = new UserDTO();
+            userDTO.setId(optionalUser.get().getId());
+            userDTO.setUsername(optionalUser.get().getUsername());
+            userDTO.setLastname(optionalUser.get().getLastname());
+            userDTO.setFirstname(optionalUser.get().getFirstname());
+            userDTO.setCountry(optionalUser.get().getCountry());
+            userDTO.setRole(optionalUser.get().getRole());
+            return ResponseEntity.ok(userDTO);
         }else{
             String mensajeError = "El usuario con nombre: " + userName + " no se ha encontrado";
             MensajeUtil.mensajeError(mensajeError);
