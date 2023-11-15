@@ -1,6 +1,5 @@
 package com.example.jwt;
 
-import com.example.user.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
