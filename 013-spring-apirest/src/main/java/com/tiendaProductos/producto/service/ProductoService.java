@@ -1,0 +1,15 @@
+package com.tiendaProductos.producto.service;
+
+import com.tiendaProductos.producto.dto.ProductoDTO;
+import com.tiendaProductos.producto.entity.Producto;
+import org.springframework.http.ResponseEntity;
+import java.util.List;
+
+public interface ProductoService {
+
+    void guardarProducto(Producto producto);
+    ResponseEntity<?> editarProducto(Long idProducto, ProductoDTO productoDTO);
+    Producto buscarProductoPorId(Long idProducto);
+    List<Producto> buscarProductos();
+    ResponseEntity<?> buscaProductoPorNombre(String nombreProducto);
+}

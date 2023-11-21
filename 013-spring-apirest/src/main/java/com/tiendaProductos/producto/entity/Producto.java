@@ -1,16 +1,15 @@
-package producto.entity;
+package com.tiendaProductos.producto.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -19,8 +18,9 @@ import lombok.NoArgsConstructor;
 public class Producto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idProducto;
+    private Long idProducto;
     @NotBlank(message = "El nombre del producto no puede estar vacío")
+    @Column(unique = true)
     private String nombreProducto;
     @NotBlank(message = "La descripción del producto no puede estar vacía")
     private String descripcionProducto;
@@ -32,4 +32,6 @@ public class Producto {
     private Integer stockProducto;
     @NotBlank(message = "El tipo del producto no puede estar vacío")
     private String tipoProducto;
+    //Este campo se asignará automaticamente al dar de alta un producto
+    private LocalDateTime fechaAltaProducto;
 }
