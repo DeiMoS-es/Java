@@ -12,4 +12,5 @@ public interface ProductoService {
     Producto buscarProductoPorId(Long idProducto);
     List<Producto> buscarProductos();
     ResponseEntity<?> buscaProductoPorNombre(String nombreProducto);
+    ResponseEntity<?> eliminarProducto(Long idProducto);
 }

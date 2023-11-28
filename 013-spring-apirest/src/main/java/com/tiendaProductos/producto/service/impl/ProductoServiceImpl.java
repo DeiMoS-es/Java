@@ -16,6 +16,7 @@ import org.springframework.util.StringUtils;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -75,7 +76,8 @@ public class ProductoServiceImpl implements ProductoService {
     }
     @Override
     public Producto buscarProductoPorId(Long idProducto) {
-        return null;
+        Optional<Producto>  optionalProducto = productoRepository.findById(idProducto);
+        return optionalProducto.orElseThrow(()-> new NoSuchElementException("Producto con ID: " + idProducto + " no encontrado."));
     }
     @Override
     public List<Producto> buscarProductos() {
@@ -83,6 +85,11 @@ public class ProductoServiceImpl implements ProductoService {
     }
     @Override
     public ResponseEntity<?> buscaProductoPorNombre(String nombreProducto) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<?> eliminarProducto(Long idProducto) {
         return null;
     }
 }
