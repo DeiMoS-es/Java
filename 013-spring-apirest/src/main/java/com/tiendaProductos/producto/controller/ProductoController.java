@@ -23,9 +23,13 @@ public class ProductoController {
     private final ProductoService productoService;
     private final ProductoRepository productoRepository;
 
-    @GetMapping("/listar")
+    @GetMapping("/listarProductos")
     public List<Producto> listarProducos(){
         return productoService.listarProductos();
+    }
+    @GetMapping("/buscar/{idProducto}")
+    public Producto buscarPorId(@PathVariable Long idProducto){
+        return productoService.buscarProductoPorId(idProducto);
     }
     @PostMapping("/guardar")
     public ResponseEntity<?> guardarProducto(@RequestBody Producto producto) {
