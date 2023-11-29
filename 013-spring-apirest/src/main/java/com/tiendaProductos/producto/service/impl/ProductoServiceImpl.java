@@ -97,6 +97,16 @@ public class ProductoServiceImpl implements ProductoService {
 
     @Override
     public ResponseEntity<?> eliminarProducto(Long idProducto) {
-        return null;
+        Optional<Producto> optionalProducto = productoRepository.findById(idProducto);
+        if(optionalProducto.isPresent()){
+            productoRepository.deleteById(idProducto);
+            String mensajeOk = "El producto: " + optionalProducto.get().getNombreProducto() + " se ha eliminado.";
+            MensajeUtil.mensajeConfirmacion(mensajeOk);
+            return ResponseEntity.status(HttpStatus.OK).body("{\"mensaje\": \"" + mensajeOk + "\"}");
+        }else{
+            String mensajeError = "El producto: " + optionalProducto.get().getNombreProducto() + " no se ha encontrado.";
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"mensaje\": \"" + mensajeError + "\"}");
+        }
+
     }
 }
