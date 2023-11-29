@@ -21,7 +21,6 @@ import java.util.List;
 public class ProductoController {
 
     private final ProductoService productoService;
-    private final ProductoRepository productoRepository;
 
     @GetMapping("/listarProductos")
     public List<Producto> listarProducos(){
@@ -34,6 +33,11 @@ public class ProductoController {
     @GetMapping("/buscarNombre/{nombreProducto}")
     public ResponseEntity<?> buscarPorNombre(@PathVariable("nombreProducto") String nombreProducto ){
         return productoService.buscaProductoPorNombre(nombreProducto);
+    }
+    @GetMapping("/buscarEnTiempoReal/{nombreProducto}")
+    public ResponseEntity<?> buscarEnTiempoReal(@PathVariable("nombreProducto") String nombreProducto){
+        List<Producto> productos = productoService.buscarEnTiempoReal(nombreProducto);
+        return ResponseEntity.ok(productos);
     }
     @PostMapping("/guardar")
     public ResponseEntity<?> guardarProducto(@RequestBody Producto producto) {
@@ -62,5 +66,10 @@ public class ProductoController {
         } catch (ProductoException ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
         }
+    }
+
+    @DeleteMapping("/eliminar/{idProducto}")
+    public ResponseEntity<?> eliminarPRoducto(@PathVariable("idProducto") Long idProducto){
+        return productoService.eliminarProducto(idProducto);
     }
 }

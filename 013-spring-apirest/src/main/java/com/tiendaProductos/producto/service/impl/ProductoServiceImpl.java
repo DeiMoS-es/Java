@@ -110,9 +110,13 @@ public class ProductoServiceImpl implements ProductoService {
             MensajeUtil.mensajeConfirmacion(mensajeOk);
             return ResponseEntity.status(HttpStatus.OK).body("{\"mensaje\": \"" + mensajeOk + "\"}");
         }else{
-            String mensajeError = "El producto: " + optionalProducto.get().getNombreProducto() + " no se ha encontrado.";
+            String mensajeError = "El producto con ID: " + idProducto + " no se ha encontrado.";
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"mensaje\": \"" + mensajeError + "\"}");
         }
+    }
 
+    @Override
+    public List<Producto> buscarEnTiempoReal(String nombreProducto) {
+        return productoRepository.findByNombreProductoContaining(nombreProducto);
     }
 }
