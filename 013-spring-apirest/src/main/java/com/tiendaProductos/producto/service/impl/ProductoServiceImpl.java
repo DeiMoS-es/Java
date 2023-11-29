@@ -81,11 +81,18 @@ public class ProductoServiceImpl implements ProductoService {
     }
     @Override
     public List<Producto> buscarProductos() {
-        return null;
+        return productoRepository.findAll();
     }
     @Override
     public ResponseEntity<?> buscaProductoPorNombre(String nombreProducto) {
-        return null;
+        Optional<Producto> optionalProducto = productoRepository.findByNombreProducto(nombreProducto);
+        if(optionalProducto.isPresent()){
+            return ResponseEntity.ok(optionalProducto);
+        }else {
+            String mensajeError = "El producto con nombre: " + nombreProducto + " no se ha encontrado.";
+            MensajeUtil.mensajeError(mensajeError);
+            return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(mensajeError);
+        }
     }
 
     @Override
