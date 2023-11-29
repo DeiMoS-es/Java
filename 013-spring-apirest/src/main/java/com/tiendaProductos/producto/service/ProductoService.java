@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface ProductoService {
-
     void guardarProducto(Producto producto);
     ResponseEntity<?> editarProducto(Long idProducto, ProductoDTO productoDTO);
     ResponseEntity<?> buscarProductoPorId(Long idProducto);

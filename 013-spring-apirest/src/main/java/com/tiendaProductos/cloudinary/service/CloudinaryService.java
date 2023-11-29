@@ -34,8 +34,8 @@ public class CloudinaryService {
         file.delete();
         return result;
     }
-    public Map delete(String idImagen) throws IOException {
-        Map result = cloudinary.uploader().destroy(idImagen, ObjectUtils.emptyMap());
+    public Map delete(String idCloudinary) throws IOException {
+        Map result = cloudinary.uploader().destroy(idCloudinary, ObjectUtils.emptyMap());
         return result;
     }
 
