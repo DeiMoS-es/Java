@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @RequestMapping("/productos")
@@ -22,6 +23,10 @@ public class ProductoController {
     private final ProductoService productoService;
     private final ProductoRepository productoRepository;
 
+    @GetMapping("/listar")
+    public List<Producto> listarProducos(){
+        return productoService.listarProductos();
+    }
     @PostMapping("/guardar")
     public ResponseEntity<?> guardarProducto(@RequestBody Producto producto) {
         try {

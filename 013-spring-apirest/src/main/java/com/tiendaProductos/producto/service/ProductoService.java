@@ -10,7 +10,7 @@ public interface ProductoService {
     void guardarProducto(Producto producto);
     ResponseEntity<?> editarProducto(Long idProducto, ProductoDTO productoDTO);
     Producto buscarProductoPorId(Long idProducto);
-    List<Producto> buscarProductos();
+    List<Producto> listarProductos();
     ResponseEntity<?> buscaProductoPorNombre(String nombreProducto);
     ResponseEntity<?> eliminarProducto(Long idProducto);
 }

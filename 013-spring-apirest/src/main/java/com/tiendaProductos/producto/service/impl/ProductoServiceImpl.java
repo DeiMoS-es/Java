@@ -80,7 +80,7 @@ public class ProductoServiceImpl implements ProductoService {
         return optionalProducto.orElseThrow(()-> new NoSuchElementException("Producto con ID: " + idProducto + " no encontrado."));
     }
     @Override
-    public List<Producto> buscarProductos() {
+    public List<Producto> listarProductos() {
         return productoRepository.findAll();
     }
     @Override
