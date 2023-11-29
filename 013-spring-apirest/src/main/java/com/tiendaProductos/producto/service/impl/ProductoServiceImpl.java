@@ -75,9 +75,15 @@ public class ProductoServiceImpl implements ProductoService {
         }
     }
     @Override
-    public Producto buscarProductoPorId(Long idProducto) {
+    public ResponseEntity<?> buscarProductoPorId(Long idProducto) {
         Optional<Producto>  optionalProducto = productoRepository.findById(idProducto);
-        return optionalProducto.orElseThrow(()-> new NoSuchElementException("Producto con ID: " + idProducto + " no encontrado."));
+        if(optionalProducto.isPresent()){
+            return ResponseEntity.ok(optionalProducto);
+        }else {
+            String mensajeError = "El producto con nombre: " + idProducto + " no se ha encontrado.";
+            MensajeUtil.mensajeError(mensajeError);
+            return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(mensajeError);
+        }
     }
     @Override
     public List<Producto> listarProductos() {

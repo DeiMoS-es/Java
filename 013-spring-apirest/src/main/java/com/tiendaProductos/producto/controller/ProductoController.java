@@ -28,8 +28,12 @@ public class ProductoController {
         return productoService.listarProductos();
     }
     @GetMapping("/buscar/{idProducto}")
-    public Producto buscarPorId(@PathVariable Long idProducto){
+    public ResponseEntity<?> buscarPorId(@PathVariable("idProducto") Long idProducto){
         return productoService.buscarProductoPorId(idProducto);
+    }
+    @GetMapping("/buscarNombre/{nombreProducto}")
+    public ResponseEntity<?> buscarPorNombre(@PathVariable("nombreProducto") String nombreProducto ){
+        return productoService.buscaProductoPorNombre(nombreProducto);
     }
     @PostMapping("/guardar")
     public ResponseEntity<?> guardarProducto(@RequestBody Producto producto) {
