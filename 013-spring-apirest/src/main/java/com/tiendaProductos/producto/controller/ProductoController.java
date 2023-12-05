@@ -1,5 +1,9 @@
 package com.tiendaProductos.producto.controller;
 
+import com.tiendaProductos.cloudinary.dto.Mensaje;
+import com.tiendaProductos.cloudinary.entity.Imagen;
+import com.tiendaProductos.cloudinary.service.CloudinaryService;
+import com.tiendaProductos.cloudinary.service.ImagenService;
 import com.tiendaProductos.producto.dto.ProductoDTO;
 import com.tiendaProductos.producto.entity.Producto;
 import com.tiendaProductos.producto.exception.ProductoException;
@@ -8,15 +12,21 @@ import com.tiendaProductos.producto.service.ProductoService;
 import com.tiendaProductos.producto.utils.ResponseUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/productos")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin()
 @AllArgsConstructor
 public class ProductoController {
 
@@ -40,9 +50,13 @@ public class ProductoController {
         return ResponseEntity.ok(productos);
     }
     @PostMapping("/guardar")
-    public ResponseEntity<?> guardarProducto(@RequestBody Producto producto) {
+    public ResponseEntity<?> guardarProducto(@RequestParam MultipartFile multipartFile, @ModelAttribute Producto producto) throws IOException {
         try {
-            productoService.guardarProducto(producto);
+            BufferedImage bi = ImageIO.read(multipartFile.getInputStream());
+            if(bi==null){
+                return new ResponseEntity(new Mensaje("Imagen no valida."), HttpStatus.BAD_REQUEST);
+            }
+            productoService.guardarProducto(producto, multipartFile);
             // Crear la respuesta exitosa utilizando la clase de utilidad
             HashMap<String, Object> respuestaExitosa = ResponseUtils.construirRespuestaGuardadoExitoso(producto);
             return ResponseEntity.ok(respuestaExitosa);

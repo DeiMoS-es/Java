@@ -1,5 +1,6 @@
 package com.tiendaProductos.producto.entity;
 
+import com.tiendaProductos.cloudinary.entity.Imagen;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
@@ -34,4 +35,10 @@ public class Producto {
     private String tipoProducto;
     //Este campo se asignará automaticamente al dar de alta un producto
     private LocalDateTime fechaAltaProducto;
+
+    @OneToOne(cascade = CascadeType.ALL, optional = true)
+    @JoinColumn(name = "imagen_id", referencedColumnName = "idImagen")
+    // name = "imagen_id": Especifica el nombre de la columna en la tabla de la entidad propietaria (Producto)
+    // que actuará como clave externa. En la tabla Producto, habrá una columna llamada imagen_id que contendrá el ID de la imagen asociada a ese producto.
+    private Imagen imagen;
 }

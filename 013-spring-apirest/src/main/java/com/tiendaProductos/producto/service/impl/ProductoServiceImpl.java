@@ -1,5 +1,9 @@
 package com.tiendaProductos.producto.service.impl;
 
+import com.tiendaProductos.cloudinary.dto.Mensaje;
+import com.tiendaProductos.cloudinary.entity.Imagen;
+import com.tiendaProductos.cloudinary.service.CloudinaryService;
+import com.tiendaProductos.cloudinary.service.impl.ImagenServiceImpl;
 import com.tiendaProductos.producto.dto.ProductoDTO;
 import com.tiendaProductos.producto.entity.Producto;
 import com.tiendaProductos.producto.exception.ProductoException;
@@ -7,15 +11,21 @@ import com.tiendaProductos.producto.repository.ProductoRepository;
 import com.tiendaProductos.producto.service.ProductoService;
 import com.tiendaProductos.producto.utils.MensajeUtil;
 import com.tiendaProductos.producto.utils.ValidacionProducto;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -23,13 +33,27 @@ import java.util.Optional;
 public class ProductoServiceImpl implements ProductoService {
     @Autowired
     private ProductoRepository productoRepository;
+    @Autowired
+    private CloudinaryService cloudinaryService;
+    @Autowired
+    private ImagenServiceImpl imagenService;
     @Override
-    public void guardarProducto(Producto producto) {
+    @Transactional
+    public void guardarProducto(Producto producto, MultipartFile imagen) {
         try {
             Optional<Producto> optionalProducto = productoRepository.findByNombreProducto(producto.getNombreProducto());
             if (optionalProducto.isEmpty()) {
                 ValidacionProducto.validarProducto(producto);
                 producto.setFechaAltaProducto(LocalDateTime.now());
+                if(imagen != null && !imagen.isEmpty()){
+                    Map resultadoCloudinary = cloudinaryService.upload(imagen);//Subo la imagen a cloudinary
+                    Imagen imagenGuardada = new Imagen((String) resultadoCloudinary.get("original_filename"),
+                                                        (String) resultadoCloudinary.get("url"),
+                                                        (String) resultadoCloudinary.get("public_id"));
+                    imagenService.saveImagen(imagenGuardada);
+                    // Asociar la imagen al producto
+                    producto.setImagen(imagenGuardada);
+                }
                 productoRepository.save(producto);
                 MensajeUtil.mensajeConfirmacion("El producto se ha guardado.");
             } else {
@@ -40,6 +64,10 @@ public class ProductoServiceImpl implements ProductoService {
             System.out.println("Error de validación: " + e.getMessage());
             throw e;// Relanzar la excepción después de imprimir el mensaje
             //Es decir, se está "lanzando" la misma excepción que se ha capturado, permitiendo que esa excepción se propague hacia arriba en la cadena de llamadas a métodos.
+        } catch (IOException e) {
+            // Manejo de la excepción de carga de imagen
+            System.out.println("Error al cargar la imagen: " + e.getMessage());
+            throw new RuntimeException("Error al cargar la imagen.", e);
         }
     }
     @Override
