@@ -50,7 +50,7 @@ public class ProductoController {
         return ResponseEntity.ok(productos);
     }
     @PostMapping("/guardar")
-    public ResponseEntity<?> guardarProducto(@RequestParam MultipartFile multipartFile, @ModelAttribute Producto producto) throws IOException {
+    public ResponseEntity<?> guardarProducto(@RequestParam("multipartFile") MultipartFile multipartFile, @ModelAttribute Producto producto) throws IOException {
         try {
             BufferedImage bi = ImageIO.read(multipartFile.getInputStream());
             if(bi==null){
