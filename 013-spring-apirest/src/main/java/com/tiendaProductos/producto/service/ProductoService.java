@@ -5,6 +5,7 @@ import com.tiendaProductos.producto.entity.Producto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface ProductoService {
@@ -13,6 +14,6 @@ public interface ProductoService {
     ResponseEntity<?> buscarProductoPorId(Long idProducto);
     List<Producto> listarProductos();
     ResponseEntity<?> buscaProductoPorNombre(String nombreProducto);
-    ResponseEntity<?> eliminarProducto(Long idProducto);
+    ResponseEntity<?> eliminarProducto(Long idProducto) throws IOException;
     List<Producto> buscarEnTiempoReal(String nombreProducto);
 }

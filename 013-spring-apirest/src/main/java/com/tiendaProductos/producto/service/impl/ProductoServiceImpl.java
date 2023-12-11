@@ -130,9 +130,11 @@ public class ProductoServiceImpl implements ProductoService {
     }
 
     @Override
-    public ResponseEntity<?> eliminarProducto(Long idProducto) {
+    public ResponseEntity<?> eliminarProducto(Long idProducto) throws IOException {
         Optional<Producto> optionalProducto = productoRepository.findById(idProducto);
         if(optionalProducto.isPresent()){
+            Imagen imagen = imagenService.buscarImgenById(optionalProducto.get().getImagen().getIdImagen()).get();
+            Map result = cloudinaryService.delete(imagen.getIdCloudinary());
             productoRepository.deleteById(idProducto);
             String mensajeOk = "El producto: " + optionalProducto.get().getNombreProducto() + " se ha eliminado.";
             MensajeUtil.mensajeConfirmacion(mensajeOk);

@@ -83,7 +83,7 @@ public class ProductoController {
     }
 
     @DeleteMapping("/eliminar/{idProducto}")
-    public ResponseEntity<?> eliminarPRoducto(@PathVariable("idProducto") Long idProducto){
+    public ResponseEntity<?> eliminarPRoducto(@PathVariable("idProducto") Long idProducto) throws IOException {
         return productoService.eliminarProducto(idProducto);
     }
 }
