@@ -2,6 +2,7 @@ package com.tiendaProductos.producto.controller;
 
 import com.tiendaProductos.cloudinary.dto.Mensaje;
 import com.tiendaProductos.cloudinary.entity.Imagen;
+import com.tiendaProductos.cloudinary.exception.ImagenException;
 import com.tiendaProductos.cloudinary.service.CloudinaryService;
 import com.tiendaProductos.cloudinary.service.ImagenService;
 import com.tiendaProductos.producto.dto.ProductoDTO;
@@ -60,6 +61,8 @@ public class ProductoController {
             // Crear la respuesta exitosa utilizando la clase de utilidad
             HashMap<String, Object> respuestaExitosa = ResponseUtils.construirRespuestaGuardadoExitoso(producto);
             return ResponseEntity.ok(respuestaExitosa);
+        } catch (ImagenException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
         } catch (ProductoException ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
         }

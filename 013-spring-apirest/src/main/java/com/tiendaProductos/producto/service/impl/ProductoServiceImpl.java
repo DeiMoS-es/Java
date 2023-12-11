@@ -2,6 +2,7 @@ package com.tiendaProductos.producto.service.impl;
 
 import com.tiendaProductos.cloudinary.dto.Mensaje;
 import com.tiendaProductos.cloudinary.entity.Imagen;
+import com.tiendaProductos.cloudinary.exception.ImagenException;
 import com.tiendaProductos.cloudinary.service.CloudinaryService;
 import com.tiendaProductos.cloudinary.service.impl.ImagenServiceImpl;
 import com.tiendaProductos.producto.dto.ProductoDTO;
@@ -20,6 +21,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -46,6 +48,11 @@ public class ProductoServiceImpl implements ProductoService {
                 ValidacionProducto.validarProducto(producto);
                 producto.setFechaAltaProducto(LocalDateTime.now());
                 if(imagen != null && !imagen.isEmpty()){
+                    String nombreImagen = imagen.getOriginalFilename().split("\\.")[0];
+                    Optional<Imagen> imagenOptional = imagenService.buscarImagenPorNombre(nombreImagen);
+                    if (imagenOptional.isPresent()) {
+                        throw new ImagenException("Ya existe una imagen con el nombre: " + nombreImagen);
+                    }
                     Map resultadoCloudinary = cloudinaryService.upload(imagen);//Subo la imagen a cloudinary
                     Imagen imagenGuardada = new Imagen((String) resultadoCloudinary.get("original_filename"),
                                                         (String) resultadoCloudinary.get("url"),

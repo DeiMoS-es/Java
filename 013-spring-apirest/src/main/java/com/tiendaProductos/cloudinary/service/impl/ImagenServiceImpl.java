@@ -34,6 +34,11 @@ public class ImagenServiceImpl implements ImagenService {
     }
 
     @Override
+    public Optional<Imagen> buscarImagenPorNombre(String nombreImagen) {
+        return imagenRepository.findByNombreImagen(nombreImagen);
+    }
+
+    @Override
     public boolean exists(int idImagen) {
         return imagenRepository.existsById(idImagen);
     }

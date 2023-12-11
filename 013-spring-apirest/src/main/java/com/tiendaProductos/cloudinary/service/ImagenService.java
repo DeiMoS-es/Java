@@ -11,6 +11,7 @@ public interface ImagenService {
     void saveImagen(Imagen imagen);
     void deleteImagen(int idImagen);
     Optional<Imagen> buscarImgenById(int idImagen);
+    Optional<Imagen> buscarImagenPorNombre(String nombreImagen);
     boolean exists(int idImagen);
 
 }
