@@ -78,29 +78,39 @@ public class ProductoServiceImpl implements ProductoService {
         }
     }
     @Override
-    public ResponseEntity<?> editarProducto(Long idProducto, ProductoDTO productoDTO) {
+    public ResponseEntity<?> editarProducto(Long idProducto, Producto producto, MultipartFile imagen) throws IOException {
         Optional<Producto> optionalProducto = productoRepository.findById(idProducto);
         if(optionalProducto.isPresent()){
             Producto productoActualizado = optionalProducto.get();
             // Verificar y actualizar cada propiedad solo si no es nula o vacía
-            if (!StringUtils.isEmpty(productoDTO.getNombreProducto())) {
-                productoActualizado.setNombreProducto(productoDTO.getNombreProducto());
+            if (!StringUtils.isEmpty(producto.getNombreProducto())) {
+                productoActualizado.setNombreProducto(producto.getNombreProducto());
             }
-            if (!StringUtils.isEmpty(productoDTO.getDescripcionProducto())) {
-                productoActualizado.setDescripcionProducto(productoDTO.getDescripcionProducto());
+            if (!StringUtils.isEmpty(producto.getDescripcionProducto())) {
+                productoActualizado.setDescripcionProducto(producto.getDescripcionProducto());
             }
-            if (productoDTO.getPrecioProducto() != null) {
-                productoActualizado.setPrecioProducto(productoDTO.getPrecioProducto());
+            if (producto.getPrecioProducto() != null) {
+                productoActualizado.setPrecioProducto(producto.getPrecioProducto());
             }
-            if (productoDTO.getStockProducto() != null && productoDTO.getStockProducto() instanceof Integer) {
-                productoActualizado.setStockProducto(productoDTO.getStockProducto());
+            if (producto.getStockProducto() != null && producto.getStockProducto() instanceof Integer) {
+                productoActualizado.setStockProducto(producto.getStockProducto());
             }
-            if (!StringUtils.isEmpty(productoDTO.getTipoProducto())) {
-                productoActualizado.setTipoProducto(productoDTO.getTipoProducto());
+            if (!StringUtils.isEmpty(producto.getTipoProducto())) {
+                productoActualizado.setTipoProducto(producto.getTipoProducto());
+            }
+            if(imagen == null){
+                productoActualizado.setImagen(optionalProducto.get().getImagen());
+            } else{
+                Map resultadoCloudinary = cloudinaryService.upload(imagen);
+                Imagen imagenAGuardar = new Imagen((String) resultadoCloudinary.get("original_filename"),
+                        (String) resultadoCloudinary.get("url"),
+                        (String) resultadoCloudinary.get("public_id"));
+                imagenService.saveImagen(imagenAGuardar);
+                productoActualizado.setImagen(imagenAGuardar);
             }
             // Guardar el producto actualizado en la base de datos
             productoRepository.save(productoActualizado);
-            String mensajeExito = "El producto: " + productoDTO.getNombreProducto() + " se ha actualizado correctamente";
+            String mensajeExito = "El producto: " + producto.getNombreProducto() + " se ha actualizado correctamente";
             MensajeUtil.mensajeConfirmacion(mensajeExito);
             return ResponseEntity.ok(ProductoDTO.fromProducto(productoActualizado));
         }else{

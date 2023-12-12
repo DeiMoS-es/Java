@@ -68,9 +68,9 @@ public class ProductoController {
         }
     }
     @PutMapping("/editar/{idProducto}")
-    public ResponseEntity<?> editarProducto(@PathVariable Long idProducto, @RequestBody ProductoDTO productoDTO) {
+    public ResponseEntity<?> editarProducto(@RequestParam(value = "multipartFile", required = false) MultipartFile multipartFile, @PathVariable Long idProducto, @ModelAttribute Producto producto) {
         try {
-            ResponseEntity<?> respuesta = productoService.editarProducto(idProducto, productoDTO);
+            ResponseEntity<?> respuesta = productoService.editarProducto(idProducto, producto, multipartFile);
             if (respuesta.getStatusCode() == HttpStatus.OK) {
                 return ResponseEntity.ok(respuesta.getBody());
             } else if (respuesta.getStatusCode() == HttpStatus.NOT_FOUND) {
@@ -80,7 +80,7 @@ public class ProductoController {
             } else {
                 return respuesta;
             }
-        } catch (ProductoException ex) {
+        } catch (ProductoException | IOException ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
         }
     }
