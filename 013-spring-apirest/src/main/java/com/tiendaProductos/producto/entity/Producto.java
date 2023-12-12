@@ -1,6 +1,8 @@
 package com.tiendaProductos.producto.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tiendaProductos.cloudinary.entity.Imagen;
+import com.tiendaProductos.pedido.entity.DetallePedido;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
@@ -9,7 +11,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+import java.util.List;
 import java.time.LocalDateTime;
 
 @Data
@@ -41,4 +43,8 @@ public class Producto {
     // name = "imagen_id": Especifica el nombre de la columna en la tabla de la entidad propietaria (Producto)
     // que actuará como clave externa. En la tabla Producto, habrá una columna llamada imagen_id que contendrá el ID de la imagen asociada a ese producto.
     private Imagen imagen;
+
+    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore // Evitar que se serialice esta propiedad
+    private List<DetallePedido> detallesPedido;
 }
