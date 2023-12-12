@@ -101,12 +101,19 @@ public class ProductoServiceImpl implements ProductoService {
             if(imagen == null){
                 productoActualizado.setImagen(optionalProducto.get().getImagen());
             } else{
-                Map resultadoCloudinary = cloudinaryService.upload(imagen);
-                Imagen imagenAGuardar = new Imagen((String) resultadoCloudinary.get("original_filename"),
-                        (String) resultadoCloudinary.get("url"),
-                        (String) resultadoCloudinary.get("public_id"));
-                imagenService.saveImagen(imagenAGuardar);
-                productoActualizado.setImagen(imagenAGuardar);
+                //Si no es null buscar si existe en la bbdd, si existe poner esa, si no poner la que viene
+                String nombreImagen = imagen.getOriginalFilename().split("\\.")[0];
+                Optional<Imagen> imagenOptional = imagenService.buscarImagenPorNombre(nombreImagen);
+                if(imagenOptional.isPresent()){
+                    productoActualizado.setImagen(imagenOptional.get());
+                } else{
+                    Map resultadoCloudinary = cloudinaryService.upload(imagen);
+                    Imagen imagenAGuardar = new Imagen((String) resultadoCloudinary.get("original_filename"),
+                            (String) resultadoCloudinary.get("url"),
+                            (String) resultadoCloudinary.get("public_id"));
+                    imagenService.saveImagen(imagenAGuardar);
+                    productoActualizado.setImagen(imagenAGuardar);
+                }
             }
             // Guardar el producto actualizado en la base de datos
             productoRepository.save(productoActualizado);
