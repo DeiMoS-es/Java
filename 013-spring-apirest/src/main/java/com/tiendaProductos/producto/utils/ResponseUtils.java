@@ -13,10 +13,10 @@ public class ResponseUtils {
         return respuesta;
     }
 
-    public static HashMap<String, Object> construirRespuestaEditarExitoso(ProductoDTO productoDTO) {
+    public static HashMap<String, Object> construirRespuestaEditarExitoso(Producto producto) {
         HashMap<String, Object> respuesta = new HashMap<>();
-        respuesta.put("producto", productoDTO);
-        respuesta.put("mensaje", "El producto: " + productoDTO.getNombreProducto() + "se ha editado con éxito.");
+        respuesta.put("producto", producto);
+        respuesta.put("mensaje", "El producto: " + producto.getNombreProducto() + " se ha editado con éxito.");
         return respuesta;
     }
 

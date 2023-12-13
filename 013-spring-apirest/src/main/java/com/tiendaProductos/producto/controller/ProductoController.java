@@ -69,18 +69,16 @@ public class ProductoController {
     }
     @PutMapping("/editar/{idProducto}")
     public ResponseEntity<?> editarProducto(@RequestParam(value = "multipartFile", required = false) MultipartFile multipartFile, @PathVariable Long idProducto, @ModelAttribute Producto producto) {
-        try {
-            ResponseEntity<?> respuesta = productoService.editarProducto(idProducto, producto, multipartFile);
-            if (respuesta.getStatusCode() == HttpStatus.OK) {
-                return ResponseEntity.ok(respuesta.getBody());
-            } else if (respuesta.getStatusCode() == HttpStatus.NOT_FOUND) {
-                // Puedes acceder al cuerpo de la respuesta (mensaje de error) con respuesta.getBody()
-                // Ejemplo: String mensajeError = (String) respuesta.getBody();
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta.getBody());
-            } else {
-                return respuesta;
-            }
-        } catch (ProductoException | IOException ex) {
+        try{
+            productoService.editarProducto(idProducto, producto, multipartFile);
+            // Crear la respuesta exitosa utilizando la clase de utilidad
+            HashMap<String, Object> respuestaExitosa = ResponseUtils.construirRespuestaEditarExitoso(producto);
+            return ResponseEntity.ok(respuestaExitosa);
+        }
+        catch (ImagenException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+        }
+        catch(ProductoException | IOException ex){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
         }
     }

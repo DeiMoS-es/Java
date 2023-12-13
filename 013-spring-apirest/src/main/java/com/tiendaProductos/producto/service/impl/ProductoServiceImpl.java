@@ -78,7 +78,7 @@ public class ProductoServiceImpl implements ProductoService {
         }
     }
     @Override
-    public ResponseEntity<?> editarProducto(Long idProducto, Producto producto, MultipartFile imagen) throws IOException {
+    public void editarProducto(Long idProducto, Producto producto, MultipartFile imagen) throws IOException {
         Optional<Producto> optionalProducto = productoRepository.findById(idProducto);
         if(optionalProducto.isPresent()){
             Producto productoActualizado = optionalProducto.get();
@@ -119,11 +119,10 @@ public class ProductoServiceImpl implements ProductoService {
             productoRepository.save(productoActualizado);
             String mensajeExito = "El producto: " + producto.getNombreProducto() + " se ha actualizado correctamente";
             MensajeUtil.mensajeConfirmacion(mensajeExito);
-            return ResponseEntity.ok(ProductoDTO.fromProducto(productoActualizado));
         }else{
             String mensajeError = "El producto con ID: " + idProducto + " no se ha encontrado.";
             MensajeUtil.mensajeError(mensajeError);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(mensajeError);
+            throw new ProductoException("El producto con ID: " + idProducto + " no se ha encontrado.");
         }
     }
     @Override
