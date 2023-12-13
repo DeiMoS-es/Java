@@ -11,7 +11,7 @@ import java.util.List;
 public interface ProductoService {
     void guardarProducto(Producto producto, MultipartFile multipartFile);
     void editarProducto(Long idProducto, Producto producto, MultipartFile multipartFile) throws IOException;
-    ResponseEntity<?> buscarProductoPorId(Long idProducto);
+    Producto buscarProductoPorId(Long idProducto);
     List<Producto> listarProductos();
     ResponseEntity<?> buscaProductoPorNombre(String nombreProducto);
     ResponseEntity<?> eliminarProducto(Long idProducto) throws IOException;

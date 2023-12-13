@@ -39,7 +39,12 @@ public class ProductoController {
     }
     @GetMapping("/buscar/{idProducto}")
     public ResponseEntity<?> buscarPorId(@PathVariable("idProducto") Long idProducto){
-        return productoService.buscarProductoPorId(idProducto);
+        Producto producto = productoService.buscarProductoPorId(idProducto);
+        if(producto != null){
+            return ResponseEntity.ok(producto);
+        }else{
+            return ResponseEntity.notFound().build();
+        }
     }
     @GetMapping("/buscarNombre/{nombreProducto}")
     public ResponseEntity<?> buscarPorNombre(@PathVariable("nombreProducto") String nombreProducto ){
