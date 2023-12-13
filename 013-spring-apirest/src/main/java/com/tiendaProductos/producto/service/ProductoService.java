@@ -13,7 +13,7 @@ public interface ProductoService {
     void editarProducto(Long idProducto, Producto producto, MultipartFile multipartFile) throws IOException;
     Producto buscarProductoPorId(Long idProducto);
     List<Producto> listarProductos();
-    ResponseEntity<?> buscaProductoPorNombre(String nombreProducto);
+    Producto buscaProductoPorNombre(String nombreProducto);
     ResponseEntity<?> eliminarProducto(Long idProducto) throws IOException;
     List<Producto> buscarEnTiempoReal(String nombreProducto);
 }

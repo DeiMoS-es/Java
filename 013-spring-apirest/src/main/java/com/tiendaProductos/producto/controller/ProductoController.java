@@ -48,7 +48,12 @@ public class ProductoController {
     }
     @GetMapping("/buscarNombre/{nombreProducto}")
     public ResponseEntity<?> buscarPorNombre(@PathVariable("nombreProducto") String nombreProducto ){
-        return productoService.buscaProductoPorNombre(nombreProducto);
+        Producto producto = productoService.buscaProductoPorNombre(nombreProducto);
+        if(producto != null){
+            return ResponseEntity.ok(producto);
+        }else{
+            return ResponseEntity.notFound().build();
+        }
     }
     @GetMapping("/buscarEnTiempoReal/{nombreProducto}")
     public ResponseEntity<?> buscarEnTiempoReal(@PathVariable("nombreProducto") String nombreProducto){
