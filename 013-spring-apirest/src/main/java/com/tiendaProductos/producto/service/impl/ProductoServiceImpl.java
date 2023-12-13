@@ -140,7 +140,6 @@ public class ProductoServiceImpl implements ProductoService {
         Optional<Producto> optionalProducto = productoRepository.findByNombreProducto(nombreProducto);
         return optionalProducto.orElseThrow();
     }
-
     @Override
     public ResponseEntity<?> eliminarProducto(Long idProducto) throws IOException {
         Optional<Producto> optionalProducto = productoRepository.findById(idProducto);
