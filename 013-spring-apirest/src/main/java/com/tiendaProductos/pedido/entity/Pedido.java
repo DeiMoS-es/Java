@@ -1,5 +1,6 @@
 package com.tiendaProductos.pedido.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tiendaProductos.producto.entity.Producto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -34,6 +35,18 @@ public class Pedido {
     private List<DetallePedido> detallesPedido;
 
     @ManyToMany
-    @JoinTable(name = "producto_pedido", joinColumns = @JoinColumn(name = "idPedido"), inverseJoinColumns = @JoinColumn(name = "idProducto"))
+    @JoinTable(name = "producto_pedido", joinColumns = @JoinColumn(name = "id_pedido"), inverseJoinColumns = @JoinColumn(name = "id_producto"))
     private List<Producto> productos;
+
+    @Override
+    public String toString() {
+        return "Pedido{" +
+                "idPedido=" + idPedido +
+                ", fechaPedido=" + fechaPedido +
+                ", estadoPedido='" + estadoPedido + '\'' +
+                // Evita la referencia circular a DetallesPedido aquí
+                // Evita la referencia circular a Productos aquí
+                '}';
+    }
 }
+

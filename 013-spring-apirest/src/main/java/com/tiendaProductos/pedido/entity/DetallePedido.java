@@ -1,5 +1,6 @@
 package com.tiendaProductos.pedido.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tiendaProductos.producto.entity.Producto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -19,11 +20,24 @@ public class DetallePedido {
     private Long idDetalle;
 
     @ManyToOne
-    @JoinColumn(name = "idProducto")
+    @JoinColumn(name = "id_producto")
     private Producto producto;
 
     @ManyToOne
-    @JoinColumn(name = "idPedido")
+    @JoinColumn(name = "id_pedido")
     private Pedido pedido;
+
+    private Integer cantidad;
+
+    @Override
+    public String toString() {
+        return "DetallePedido{" +
+                "idDetalle=" + idDetalle +
+                ", cantidad=" + cantidad +
+                // Evita la referencia circular a Producto aquí
+                // Evita la referencia circular a Pedido aquí
+                '}';
+    }
+
 }
 

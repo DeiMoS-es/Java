@@ -15,6 +15,7 @@ public class ProductoDTO {
     private Double precioProducto;
     private Integer stockProducto;
     private String tipoProducto;
+    private Integer cantidad;
 
     public static ProductoDTO fromProducto(Producto producto){
         ProductoDTO dto = new ProductoDTO();

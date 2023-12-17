@@ -47,4 +47,19 @@ public class Producto {
     @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore // Evitar que se serialice esta propiedad
     private List<DetallePedido> detallesPedido;
+
+    @Override
+    public String toString() {
+        return "Producto{" +
+                "idProducto=" + idProducto +
+                ", nombreProducto='" + nombreProducto + '\'' +
+                ", descripcionProducto='" + descripcionProducto + '\'' +
+                ", precioProducto=" + precioProducto +
+                ", stockProducto=" + stockProducto +
+                ", tipoProducto='" + tipoProducto + '\'' +
+                ", fechaAltaProducto=" + fechaAltaProducto +
+                // Evita la referencia circular a DetallePedido aquí
+                '}';
+    }
+
 }
