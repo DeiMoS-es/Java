@@ -31,6 +31,9 @@ public class Pedido {
     @NotNull
     private String estadoPedido;
 
+    @NotNull
+    private Double precioTotal;
+
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DetallePedido> detallesPedido;
 

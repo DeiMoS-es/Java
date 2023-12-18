@@ -30,21 +30,24 @@ public class PedidoServiceImpl implements PedidoService {
             Pedido nuevoPedido = new Pedido();
             List<DetallePedido> detallesPedido = new ArrayList<>();
             List<Producto> listaProductosSave = new ArrayList<>();//Lista de productos para la relación ManyToMany de Pedido
+            Double precioTotalPedido = 0.0;
             for(ProductoDTO productoDTO : listaProductos){
                 DetallePedido detalle = new DetallePedido();
+                Producto producto = productoService.buscarProductoPorId(productoDTO.getIdProducto());
                 detalle.setPedido(nuevoPedido);
-                detalle.setProducto(productoService.buscarProductoPorId(productoDTO.getIdProducto()));
+                detalle.setProducto(producto);
                 detalle.setCantidad(productoDTO.getCantidad());
                 detallesPedido.add(detalle);
-                listaProductosSave.add(productoService.buscarProductoPorId(productoDTO.getIdProducto()));
+                listaProductosSave.add(producto);
+                precioTotalPedido += calcularPrecioTotalPedido(productoDTO.getCantidad(), productoDTO.getPrecioProducto());
+                actualizarStockProducto(producto, productoDTO.getCantidad());
             }
             // Añadimos los detalles del pedido en el pedido, para dar de alta el pedido
             nuevoPedido.setDetallesPedido(detallesPedido);
             nuevoPedido.setProductos(listaProductosSave);
             nuevoPedido.setFechaPedido(LocalDateTime.now());
+            nuevoPedido.setPrecioTotal(precioTotalPedido);
             nuevoPedido.setEstadoPedido("creado");
-            //TODO faltaría por calcular el precio total del pedido, y modificar el sotck de los productos restando la cantidad pedida
-            //calcularPrecioTotalPedido(nuevoPedido);
             pedidoRepository.save(nuevoPedido);
             MensajeUtil.mensajeConfirmacion("El pedido se ha guardado correctamente");
         }
@@ -60,12 +63,11 @@ public class PedidoServiceImpl implements PedidoService {
      //   return null;
    // }
 
-    private static double calcularPrecioTotalPedido(Pedido pedido){
-        System.out.println("+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+--+-+-+-+-+-+-+-+-");
-        System.out.println(pedido);
-        //for (Producto producto : pedido.getProductos()){
-          //  System.out.println(producto);
-        //}
-        return 0.0;
+    private static double calcularPrecioTotalPedido(int cantidad, double precioProducto){
+        return cantidad * precioProducto;
+    }
+
+    private static void actualizarStockProducto(Producto producto, int cantidad){
+        producto.setStockProducto(producto.getStockProducto() - cantidad);
     }
 }
