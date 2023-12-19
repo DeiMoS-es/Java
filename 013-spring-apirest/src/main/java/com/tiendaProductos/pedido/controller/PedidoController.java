@@ -10,8 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/pedidos")
@@ -20,7 +18,6 @@ import java.util.Optional;
 public class PedidoController {
 
     private final PedidoService pedidoService;
-    private final PedidoRepository pedidoRepository;
     @PostMapping("/guardarPedido")
     public ResponseEntity<Pedido> guardarPedido(@RequestBody List<ProductoDTO> listaProductos){
         pedidoService.guardarPedido(listaProductos);
