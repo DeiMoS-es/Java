@@ -20,11 +20,12 @@ public class DetallePedido {
     private Long idDetalle;
 
     @ManyToOne
-    @JoinColumn(name = "id_producto")
+    @JoinColumn(name = "id_producto") // Aquí si nos interesa que nos muestre los productos del pedido
     private Producto producto;
 
     @ManyToOne
     @JoinColumn(name = "id_pedido")
+    @JsonIgnore // Añadimos esta notación para no serializar los detalles del pedido cuando busquemos un pedido, ya que no nos interesa
     private Pedido pedido;
 
     private Integer cantidad;

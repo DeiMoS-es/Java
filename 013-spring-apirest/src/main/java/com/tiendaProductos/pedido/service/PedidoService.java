@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface PedidoService {
     void guardarPedido(List<ProductoDTO> listaProductos);
-    //Pedido buscarPedidoPorId(Long idPedido);
- //   ResponseEntity<?> eliminarPedido(Long idPedido);
+    Pedido buscarPedidoPorId(Long idPedido);
+    boolean eliminarPedido(Long idPedido);
 }

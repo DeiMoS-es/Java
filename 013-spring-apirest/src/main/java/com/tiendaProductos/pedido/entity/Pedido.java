@@ -35,6 +35,7 @@ public class Pedido {
     private Double precioTotal;
 
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore // Añadimos esta notación para no serializar los detalles del pedido cuando busquemos un pedido, ya que no nos interesa
     private List<DetallePedido> detallesPedido;
 
     @ManyToMany

@@ -1,6 +1,7 @@
 package com.tiendaProductos.pedido.controller;
 
 import com.tiendaProductos.pedido.entity.Pedido;
+import com.tiendaProductos.pedido.repository.PedidoRepository;
 import com.tiendaProductos.pedido.service.PedidoService;
 import com.tiendaProductos.producto.dto.ProductoDTO;
 import lombok.AllArgsConstructor;
@@ -9,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/pedidos")
@@ -17,10 +20,28 @@ import java.util.List;
 public class PedidoController {
 
     private final PedidoService pedidoService;
-
+    private final PedidoRepository pedidoRepository;
     @PostMapping("/guardarPedido")
     public ResponseEntity<Pedido> guardarPedido(@RequestBody List<ProductoDTO> listaProductos){
         pedidoService.guardarPedido(listaProductos);
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+    @GetMapping("/buscarPedido/{idPedido}")
+    public ResponseEntity<Pedido> buscarPedido(@PathVariable("idPedido") Long idPedido){
+        Pedido pedido = pedidoService.buscarPedidoPorId(idPedido);
+        if(pedido != null){
+            return ResponseEntity.ok(pedido);
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/eliminarPedido/{idPedido}")
+    public ResponseEntity<?> eliminarPedido (@PathVariable("idPedido") Long idPedido){
+       if(pedidoService.eliminarPedido(idPedido)){
+           return new ResponseEntity<>("Pedido eliminado exitosamente", HttpStatus.OK);
+       }else{
+           return new ResponseEntity<>("No se ha podido eliminar el pedido", HttpStatus.NOT_FOUND);
+       }
     }
 }

@@ -2,6 +2,7 @@ package com.tiendaProductos.pedido.service.impl;
 
 import com.tiendaProductos.pedido.entity.DetallePedido;
 import com.tiendaProductos.pedido.entity.Pedido;
+import com.tiendaProductos.pedido.exception.PedidoException;
 import com.tiendaProductos.pedido.repository.PedidoRepository;
 import com.tiendaProductos.pedido.service.PedidoService;
 import com.tiendaProductos.producto.dto.ProductoDTO;
@@ -16,6 +17,9 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+
 @Service
 public class PedidoServiceImpl implements PedidoService {
     @Autowired
@@ -52,22 +56,29 @@ public class PedidoServiceImpl implements PedidoService {
             MensajeUtil.mensajeConfirmacion("El pedido se ha guardado correctamente");
         }
     }
-
-   // @Override
-    //public Pedido buscarPedidoPorId(Long idPedido) {
-    //    return null;
-   // }
-
-   // @Override
-   // public ResponseEntity<?> eliminarPedido(Long idPedido) {
-     //   return null;
-   // }
-
+    @Override
+    public Pedido buscarPedidoPorId(Long idPedido) {
+        return pedidoRepository.findById(idPedido).orElseThrow(()-> new NoSuchElementException("Pedido con ID: " + idPedido + " no encontrado"));
+    }
+    @Override
+    public boolean eliminarPedido(Long idPedido) {
+        Optional<Pedido> pedido = pedidoRepository.findById(idPedido);
+        if(pedido.isPresent()){
+            pedidoRepository.deleteById(idPedido);
+            return true;
+        }else{
+            return false;
+        }
+    }
     private static double calcularPrecioTotalPedido(int cantidad, double precioProducto){
         return cantidad * precioProducto;
     }
-
     private static void actualizarStockProducto(Producto producto, int cantidad){
-        producto.setStockProducto(producto.getStockProducto() - cantidad);
+        if(producto.getStockProducto() - cantidad >= 0){
+            producto.setStockProducto(producto.getStockProducto() - cantidad);
+        } else{
+            throw new PedidoException("No hay stock del producto: " + producto.getNombreProducto() + " inténtelo de nuevo más tarde.");
+        }
+
     }
 }
