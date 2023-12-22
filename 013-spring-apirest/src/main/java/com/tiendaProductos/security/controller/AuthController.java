@@ -23,6 +23,6 @@ public class AuthController {
     }
     @GetMapping("/register")
     public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest request){
-        return ResponseEntity.ok(authService.register(request)); // la respuesta será el token
+        return ResponseEntity.ok(authService.register(request));
     }
 }
