@@ -9,5 +9,5 @@ import java.util.Optional;
 @Service
 public interface UserRepository extends JpaRepository<User, Long> {
     //QueryMethod para buscar por nombre de usuario
-    Optional<User> findByUserName(String username);
+    Optional<User> findByUsername(String username);
 }
