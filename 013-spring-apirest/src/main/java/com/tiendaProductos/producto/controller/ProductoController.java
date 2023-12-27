@@ -27,7 +27,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/productos")
-@CrossOrigin()
+@CrossOrigin(origins = "http://localhost:4200")
 @AllArgsConstructor
 public class ProductoController {
 
