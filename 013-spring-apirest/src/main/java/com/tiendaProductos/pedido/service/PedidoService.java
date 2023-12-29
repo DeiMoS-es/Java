@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface PedidoService {
-    void guardarPedido(List<ProductoDTO> listaProductos);
+    void guardarPedido(Long idUsuario ,List<ProductoDTO> listaProductos);
     Pedido buscarPedidoPorId(Long idPedido);
     boolean eliminarPedido(Long idPedido);
 }

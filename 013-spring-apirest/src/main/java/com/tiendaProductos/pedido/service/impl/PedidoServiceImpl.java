@@ -10,6 +10,8 @@ import com.tiendaProductos.producto.entity.Producto;
 import com.tiendaProductos.producto.repository.ProductoRepository;
 import com.tiendaProductos.producto.service.ProductoService;
 import com.tiendaProductos.producto.utils.MensajeUtil;
+import com.tiendaProductos.user.entity.User;
+import com.tiendaProductos.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -27,11 +29,15 @@ public class PedidoServiceImpl implements PedidoService {
     @Autowired
     private PedidoRepository pedidoRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     //TODO implementar métodos
     @Override
-    public void guardarPedido(List<ProductoDTO> listaProductos) {
+    public void guardarPedido(Long idUsuario ,List<ProductoDTO> listaProductos) {
         if(!listaProductos.isEmpty()){
             Pedido nuevoPedido = new Pedido();
+            User usuario = userRepository.findById(idUsuario).orElseThrow(() -> new RuntimeException("Usuario no encontrado con id: " + idUsuario));
             List<DetallePedido> detallesPedido = new ArrayList<>();
             List<Producto> listaProductosSave = new ArrayList<>();//Lista de productos para la relación ManyToMany de Pedido
             Double precioTotalPedido = 0.0;
@@ -52,6 +58,7 @@ public class PedidoServiceImpl implements PedidoService {
             nuevoPedido.setFechaPedido(LocalDateTime.now());
             nuevoPedido.setPrecioTotal(precioTotalPedido);
             nuevoPedido.setEstadoPedido("creado");
+            nuevoPedido.setUsuario(usuario);
             pedidoRepository.save(nuevoPedido);
             MensajeUtil.mensajeConfirmacion("El pedido se ha guardado correctamente");
         }

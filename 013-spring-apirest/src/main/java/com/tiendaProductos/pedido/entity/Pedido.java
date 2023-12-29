@@ -2,6 +2,7 @@ package com.tiendaProductos.pedido.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tiendaProductos.producto.entity.Producto;
+import com.tiendaProductos.user.entity.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -41,6 +42,10 @@ public class Pedido {
     @ManyToMany
     @JoinTable(name = "producto_pedido", joinColumns = @JoinColumn(name = "id_pedido"), inverseJoinColumns = @JoinColumn(name = "id_producto"))
     private List<Producto> productos;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_usuario")
+    private User usuario;
 
     @Override
     public String toString() {

@@ -18,9 +18,9 @@ import java.util.List;
 public class PedidoController {
 
     private final PedidoService pedidoService;
-    @PostMapping("/guardarPedido")
-    public ResponseEntity<Pedido> guardarPedido(@RequestBody List<ProductoDTO> listaProductos){
-        pedidoService.guardarPedido(listaProductos);
+    @PostMapping("/guardarPedido/{idUsuario}")
+    public ResponseEntity<Pedido> guardarPedido(@PathVariable("idUsuario") Long idUsuario ,@RequestBody List<ProductoDTO> listaProductos){
+        pedidoService.guardarPedido(idUsuario ,listaProductos);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
     @GetMapping("/buscarPedido/{idPedido}")
