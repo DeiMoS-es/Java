@@ -17,13 +17,21 @@ public class UserController {
 
     @GetMapping("/buscarPorNombre/{username}")
     public ResponseEntity<User> buscarPorNombre(@PathVariable("username") String username) {
-        System.out.println("Entro en controller--------------------------------");
-        System.out.println(username);
         try {
             User user = userService.buscarPorNombre(username);
             return ResponseEntity.ok(user);
         } catch (UsernameNotFoundException ex) {
             // Manejo de la excepción cuando el usuario no es encontrado
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/buscarById/{idUsuario}")
+    public ResponseEntity<User> buscarById(@PathVariable("idUsuario") Long idUsuario) {
+        try{
+            User user = userService.buscarById(idUsuario);
+            return ResponseEntity.ok(user);
+        } catch (UsernameNotFoundException ex) {
             return ResponseEntity.notFound().build();
         }
     }
