@@ -1,8 +1,9 @@
 package com.tiendaProductos.user.service;
 
+import com.tiendaProductos.user.dto.UserDTO;
 import com.tiendaProductos.user.entity.User;
 
 public interface UserService {
     User buscarPorNombre(String username);
-    User buscarById(Long idUsuario);
+    UserDTO buscarById(Long idUsuario);
 }

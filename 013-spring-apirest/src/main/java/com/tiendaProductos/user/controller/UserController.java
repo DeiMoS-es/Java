@@ -1,5 +1,6 @@
 package com.tiendaProductos.user.controller;
 
+import com.tiendaProductos.user.dto.UserDTO;
 import com.tiendaProductos.user.entity.User;
 import com.tiendaProductos.user.service.UserService;
 import lombok.AllArgsConstructor;
@@ -27,10 +28,10 @@ public class UserController {
     }
 
     @GetMapping("/buscarById/{idUsuario}")
-    public ResponseEntity<User> buscarById(@PathVariable("idUsuario") Long idUsuario) {
+    public ResponseEntity<UserDTO> buscarById(@PathVariable("idUsuario") Long idUsuario) {
         try{
-            User user = userService.buscarById(idUsuario);
-            return ResponseEntity.ok(user);
+            UserDTO userDTO = userService.buscarById(idUsuario);
+            return ResponseEntity.ok(userDTO);
         } catch (UsernameNotFoundException ex) {
             return ResponseEntity.notFound().build();
         }
