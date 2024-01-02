@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDTO {
+    private Long idUsuario;
     private String username;
     private String nombre;
     private String apellidos;
@@ -18,6 +19,7 @@ public class UserDTO {
 
     public static UserDTO fromUser(User user){
         UserDTO userDTO = new UserDTO();
+        userDTO.setIdUsuario(user.getIdUsuario());
         userDTO.setUsername(user.getUsername());
         userDTO.setNombre(user.getNombre());
         userDTO.setApellidos(user.getApellidos());
