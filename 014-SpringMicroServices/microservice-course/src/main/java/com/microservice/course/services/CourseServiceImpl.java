@@ -32,7 +32,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public StudentByCourseResponse findStudentsByCOurseId(Long courseId) {
+    public StudentByCourseResponse findStudentsByCourseId(Long courseId) {
         // Consultar el curso
         Course course = courseRepository.findById(courseId).orElse(new Course()); // Si no lo encuentra genera un curso vacio
         // Obtener los estudiantes

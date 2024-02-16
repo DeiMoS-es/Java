@@ -13,6 +13,6 @@ public interface StudentRepository extends CrudRepository<Student, Long> {
     // Query method para buscar todos los cursos por ID, revisar que sea la nomenclatura de la tabla de BBDD
     //List<Student> findAllByCourseId(Long courseId);
     // La siguiente forma es una forma similar de hacer lo de arriba
-    @Query("SELECT s FROM students WHERE s.courseId = : courseId")
+    @Query("SELECT s FROM Student s WHERE s.courseId = :courseId")
     List<Student> findAllStudent(Long courseId);
 }

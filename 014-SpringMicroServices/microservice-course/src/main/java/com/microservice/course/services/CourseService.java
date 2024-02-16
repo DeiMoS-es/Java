@@ -11,5 +11,5 @@ public interface CourseService {
     Course findByCourseId(Long courseId);
     void saveCourse(Course course);
 
-    StudentByCourseResponse findStudentsByCOurseId(Long courseId);
+    StudentByCourseResponse findStudentsByCourseId(Long courseId);
 }
