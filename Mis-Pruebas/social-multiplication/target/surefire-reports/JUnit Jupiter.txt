@@ -1,0 +1,15 @@
+-------------------------------------------------------------------------------
+Test set: JUnit Jupiter
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0 s <<< FAILURE! -- in JUnit Jupiter
+JUnit Jupiter.JUnit Jupiter -- Time elapsed: 0 s <<< ERROR!
+java.lang.NoClassDefFoundError: org/junit/jupiter/api/extension/ScriptEvaluationException
+	at java.base/java.lang.Class.forName0(Native Method)
+	at java.base/java.lang.Class.forName(Class.java:391)
+	at java.base/java.lang.Class.forName(Class.java:382)
+Caused by: java.lang.ClassNotFoundException: org.junit.jupiter.api.extension.ScriptEvaluationException
+	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641)
+	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:521)
+	... 3 more
+
