@@ -13,6 +13,10 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 
+/**
+ * Clase de pruebas para MultiplicationService.
+ * Es una prueba de integración.
+ */
 @SpringBootTest
 @ExtendWith(SpringExtension.class)//Anotación para JUnit 5
 public class MultiplicationServiceTest {
