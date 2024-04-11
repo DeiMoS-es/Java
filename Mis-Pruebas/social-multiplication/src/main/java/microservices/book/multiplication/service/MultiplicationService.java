@@ -1,6 +1,7 @@
 package microservices.book.multiplication.service;
 
 import microservices.book.multiplication.domain.Multiplication;
+import microservices.book.multiplication.domain.MultiplicationResultAttempt;
 
 public interface MultiplicationService {
 /**
@@ -10,4 +11,6 @@ public interface MultiplicationService {
 * @return a Multiplication object with random factors
 */
 Multiplication createRandomMultiplication();
+// Método para verificar los resultados de cada intento
+boolean checkAttempt(final MultiplicationResultAttempt resultAttempt);
 }
