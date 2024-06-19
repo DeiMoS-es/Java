@@ -8,13 +8,17 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
-
+@SpringBootTest
 public class ProductServiceImplTest {
+    /* Estas anotaciones se usan para cuando no tenemos implementados los métodos de la clase que vamos a probar
     // Anotación que se usa para inyectar instancias simuladas
     @Mock
     private ProductRepository productRepository;
@@ -28,7 +32,13 @@ public class ProductServiceImplTest {
     public void init() {
         MockitoAnnotations.openMocks(this);
     }
-
+    */
+    /* Una vez implemantados los métodos de clase, inyectamos de manera normal (con @Autowired) y probamos los tests */
+    @Autowired
+    private ProductRepository productRepository;
+    @Autowired
+    private ProductServiceImpl productService;
+    /* Test para usar con mocks
     @Test
     public void testBuscarProductoPorId() {
         Product product = new Product();
@@ -37,10 +47,24 @@ public class ProductServiceImplTest {
         product.setDescription("This is a test product");
         product.setPrice(100.0);
 
-        when(productRepository.findById(2L)).thenReturn(Optional.of(product));
+       // solo se usa cuando usamos mocks when(productRepository.findById(2L)).thenReturn(Optional.of(product));
 
         Optional<Product> returnedProduct = productService.buscarProductoPorId(2L);
 
         assertEquals(Optional.of(product), returnedProduct);
+    }
+    */
+    @Test
+    public void testBuscarProductoPorId() {
+        // Busca el producto por ID
+        Optional<Product> returnedProduct = productService.buscarProductoPorId(1L);
+
+        // Comprueba que el producto devuelto tiene los valores esperados
+        assertTrue(returnedProduct.isPresent());
+        assertEquals(1L, returnedProduct.get().getId());
+        assertEquals("Ratón", returnedProduct.get().getName());
+        assertEquals("Ratón Logitech", returnedProduct.get().getDescription());
+        assertEquals(10, returnedProduct.get().getPrice());
+        assertEquals(10, returnedProduct.get().getQuantity());
     }
 }
