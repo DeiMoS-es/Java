@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Long id;
     @NotBlank(message = "The name of the product cannot be empty")
     @Size(min = 3, max = 50, message = "The name must be between 3 and 50 characters")
     @Column(unique = true)
