@@ -1,9 +1,7 @@
 package com.ecomerce.orders_service.services.impl;
 
 
-import com.ecomerce.orders_service.model.dtos.BaseResponse;
-import com.ecomerce.orders_service.model.dtos.OrderItemRequest;
-import com.ecomerce.orders_service.model.dtos.OrderRequest;
+import com.ecomerce.orders_service.model.dtos.*;
 import com.ecomerce.orders_service.model.entities.Order;
 import com.ecomerce.orders_service.model.entities.OrderItems;
 import com.ecomerce.orders_service.repositories.OrderRepository;
@@ -12,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -31,6 +30,9 @@ public class OrderServiceImpl implements OrderService {
                 .retrieve()// Realizar la llamada
                 .bodyToMono(BaseResponse.class)// Convertir la respuesta a un objeto BaseResponse, contendrá los errores que se puedan producir en la llamada al servicio
                 .block(); // Bloquear la ejecución hasta que se complete la llamada
+       System.out.println("----------------------------------------------------------------------");
+       System.out.println(result);
+       System.out.println("----------------------------------------------------------------------");
        if(result != null && !result.hasErrors()) {
            // Si no hay errores, procedemos a guardar la orden
            // Crear una nueva instancia de la entidad Order
@@ -44,8 +46,33 @@ public class OrderServiceImpl implements OrderService {
            // Guardar la orden en la base de datos utilizando el repositorio
            this.orderRepository.save(order);
        }else{
-           throw new IllegalArgumentException("Alguno de los productos no cuenta con stock suficiente");
+           // Obtener los mensajes de error y lanzar una excepción con el primer mensaje de error
+           String[] errors = result.getErrorMessages();
+           if (errors != null && errors.length > 0) {
+               throw new IllegalArgumentException(errors[0]);
+           }
        }
+    }
+
+    @Override
+    public List<OrderResponse> getAllOrders() {
+        // Recuperar todas las órdenes de la base de datos utilizando el repositorio
+        List<Order> orders = this.orderRepository.findAll();
+        // Mapear cada entidad Order a un objeto OrderResponse y devolver la lista resultante
+        return orders.stream().map(this::mapToOrderResponse).toList();
+    }
+
+    private OrderResponse mapToOrderResponse(Order order) {
+        // Crear una nueva instancia de OrderResponse utilizando los valores de la entidad Order
+        // Mapear cada entidad OrderItems en la lista de OrderItems de la entidad Order a un objeto OrderItemsResponse
+        return new OrderResponse(order.getOrderId(), order.getOrderNumber(),
+                order.getOrderItems().stream().map(this::mapToOrderItemRequest).toList());
+    }
+
+    private OrderItemsResponse mapToOrderItemRequest(OrderItems orderItems) {
+        // Crear una nueva instancia de OrderItemsResponse utilizando los valores de la entidad OrderItems
+        return new OrderItemsResponse(orderItems.getOrderItemId(), orderItems.getSku(),
+                orderItems.getPrice(), orderItems.getQuantity());
     }
 
     private OrderItems mapOrderItemRequestToOrderItem(OrderItemRequest orderItemRequest, Order order) {

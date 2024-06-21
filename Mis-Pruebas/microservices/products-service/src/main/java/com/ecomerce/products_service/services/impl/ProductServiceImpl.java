@@ -20,6 +20,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void addProduct(ProductRequest productRequest) {
         Product product = Product.builder()
+                .sku(productRequest.getSku())
                 .productName(productRequest.getProductName())
                 .productDescription(productRequest.getProductDescription())
                 .productPrice(productRequest.getProductPrice())
@@ -38,6 +39,7 @@ public class ProductServiceImpl implements ProductService {
     private ProductResponse mapToProductResponse(Product product) {
         return ProductResponse.builder()
                 .productId(product.getProductId())
+                .sku(product.getSku())
                 .productName(product.getProductName())
                 .productDescription(product.getProductDescription())
                 .productPrice(product.getProductPrice())
