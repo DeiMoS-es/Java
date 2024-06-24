@@ -32,3 +32,12 @@
 ### Hay que diferenciar cuando queremos realizar test usando mocks y cuando no.
 - Cuando los realizamos sin mocks, es porque ya tenemos implementados nuestros métodos y queremos comprobar que funcionan correctamente.
 - Usaremos mocks para seguir los pasos de TDD, ya que aún no hemos implementado los métodos.
+
+# Api-Gateway
+- Creamos el microservicio de Api-Gateway con las siguientes dependencias:
+  - DevTools
+  - Lombok
+  - Spring Configuration Processor
+  - Gateway, OJO (spring initializer en la dependencia de gateway añade -mvc, hay que quitarlo)
+- Una vez creado el proyecto, accedemos al pom.xml y tenemos que llevarnos la etiqueta <dependencyManagement> al proyecto padre, la situaremos despues de las etiquetas <dependencies>.
+- También tenemos que llevarnos la versión de spring-cloud al properties del pom.xml del proyecto padre.

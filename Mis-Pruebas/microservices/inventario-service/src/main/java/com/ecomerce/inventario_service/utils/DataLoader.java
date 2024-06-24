@@ -22,10 +22,10 @@ public class DataLoader implements CommandLineRunner {
         log.info("Cargando datos de inventario");
         if(inventoryRepository.findAll().size() == 0){
             inventoryRepository.saveAll(List.of(
-                    Inventory.builder().sku("123").quantity(10L).build(),
-                    Inventory.builder().sku("124").quantity(5L).build(),
-                    Inventory.builder().sku("125").quantity(15L).build(),
-                    Inventory.builder().sku("126").quantity(0L).build()
+                    Inventory.builder().sku("00001").quantity(10L).build(),
+                    Inventory.builder().sku("00002").quantity(5L).build(),
+                    Inventory.builder().sku("00003").quantity(15L).build(),
+                    Inventory.builder().sku("00004").quantity(0L).build()
             ));
         }
         log.info("Datos de inventario cargados");

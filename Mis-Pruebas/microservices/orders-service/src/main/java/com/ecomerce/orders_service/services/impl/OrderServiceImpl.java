@@ -25,14 +25,11 @@ public class OrderServiceImpl implements OrderService {
        // Para eso llamamos a un método en el microservicio de inventario
        BaseResponse result = this.webClientBuilder.build()
                .post()
-                .uri("http://localhost:8081/api/inventory/in-stock")
+                .uri("http://localhost:8080/api/inventory/in-stock")
                 .bodyValue(orderRequest.getOrderItems())// Pasar la lista de OrderItemRequest
                 .retrieve()// Realizar la llamada
                 .bodyToMono(BaseResponse.class)// Convertir la respuesta a un objeto BaseResponse, contendrá los errores que se puedan producir en la llamada al servicio
                 .block(); // Bloquear la ejecución hasta que se complete la llamada
-       System.out.println("----------------------------------------------------------------------");
-       System.out.println(result);
-       System.out.println("----------------------------------------------------------------------");
        if(result != null && !result.hasErrors()) {
            // Si no hay errores, procedemos a guardar la orden
            // Crear una nueva instancia de la entidad Order
