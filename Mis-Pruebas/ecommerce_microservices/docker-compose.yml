@@ -1,0 +1,11 @@
+services:
+  db:
+    image: mysql:8.0.33
+    environment:
+      MYSQL_DATABASE: 'b60iositjqcste4mia4e'
+      MYSQL_USER: 'uzvfure5wlfktzc2'
+      MYSQL_PASSWORD: 'CphBsMVxuRKQUevyWbkP'
+      MYSQL_ROOT_PASSWORD: 'CphBsMVxuRKQUevyWbkP'
+    ports:
+      - '3336:3306'
+    restart: always
