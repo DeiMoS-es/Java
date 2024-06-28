@@ -33,6 +33,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<modules>
+		<module>notification-service</module>
 		<module>discovery-server</module>
 		<module>api-gateway</module>
 		<module>products-service</module>

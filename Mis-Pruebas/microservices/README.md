@@ -41,3 +41,14 @@
   - Gateway, OJO (spring initializer en la dependencia de gateway añade -mvc, hay que quitarlo)
 - Una vez creado el proyecto, accedemos al pom.xml y tenemos que llevarnos la etiqueta <dependencyManagement> al proyecto padre, la situaremos despues de las etiquetas <dependencies>.
 - También tenemos que llevarnos la versión de spring-cloud al properties del pom.xml del proyecto padre.
+
+# Kafka
+- Creamos el microservicio de Kafka con las siguientes dependencias:
+  - DevTools
+  - Lombok
+  - Spring Configuration Processor
+  - Spring Web
+  - Spring Bot Actuator
+  - Eureka discovery client
+  - Spring for Apache Kafka
+  
