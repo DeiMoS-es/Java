@@ -20,7 +20,7 @@ public class Product {
     @NotNull
     @Size(min = 4, max = 10)
     @Column(nullable = false, length = 10)
-    private String sku;
+    private String productSku;
     @NotNull
     @Size(min = 4, max = 50)
     @Column(nullable = false, length = 50)
@@ -32,6 +32,8 @@ public class Product {
     @NotNull
     @Min(1)
     private Double productPrice;
+    @NotNull
+    private Boolean productStatus;
 
     @Override
     public String toString() {
