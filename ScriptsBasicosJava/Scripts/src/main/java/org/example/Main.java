@@ -11,10 +11,16 @@ public class Main {
         int n = arr.length;
         int x = 40;
         int resultado = BusquedaBinaria.busquedaBinaria(arr, 0, n - 1, x);
+        int resultado2 = BusquedaBinaria.busquedaBinariaV2(arr);
         if (resultado == -1) {
             System.out.println("El número no se encuentra en el arreglo.");
         } else {
             System.out.println("El número se encuentra en la posición " + resultado);
+        }
+        if (resultado2 == -1) {
+            System.out.println("El número no se encuentra en el arreglo.");
+        } else {
+            System.out.println("El número se encuentra en la posición " + resultado2);
         }
         // Ordenación de array
         // Método de la burbuja

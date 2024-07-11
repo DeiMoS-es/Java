@@ -27,5 +27,20 @@ public class BusquedaBinaria {
         return -1; // Si no se encuentra el número en el arreglo. Devolvemos -1.
     };
 
-
+    public static int busquedaBinariaV2(int arr[]){
+        int posicionInicial = 0;
+        int posicionFinal = arr.length - 1;
+        int numeroABuscar = 5;
+        if (posicionFinal > posicionInicial) {
+            int mitad = posicionInicial + (posicionFinal - posicionInicial) / 2;
+            if (arr[mitad] == numeroABuscar) {
+                return mitad;
+            } else if (arr[mitad] > numeroABuscar) {
+                return busquedaBinariaV2(arr);
+            } else {
+                return busquedaBinariaV2(arr);
+            }
+        }
+        return -1;
+    };
 }
