@@ -41,4 +41,20 @@ public class OperacionesString {
         return palabraMasRepetida;
     };
 
+    public static void ordenarAlfabeticamente(String cadena){
+        cadena = cadena.replace(" ", "");
+        char[] caracteres = cadena.toCharArray();
+        int n = caracteres.length;
+        for (int i = 0; i < n-1; i++){
+            for (int j = i+1; j < n; j++){
+                if (caracteres[i] > caracteres[j]){
+                    char temp = caracteres[i];
+                    caracteres[i] = caracteres[j];
+                    caracteres[j] = temp;
+                }
+            }
+        }
+        String cadenaOrdenada = new String(caracteres);
+        System.out.println(cadenaOrdenada);
+    };
 }

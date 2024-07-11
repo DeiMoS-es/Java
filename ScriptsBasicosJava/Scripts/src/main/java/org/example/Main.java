@@ -38,5 +38,12 @@ public class Main {
         System.out.println("//////////////////////////////////////////");
         System.out.println("Palabra más repetida");
         System.out.println(OperacionesString.palabraMasRepetida("hola mundo hola hola mundo mundo mundo hola hola"));
+        System.out.println("//////////////////////////////////////////");
+        System.out.println("Ordenando alfabéticamente");
+        OperacionesString.ordenarAlfabeticamente("hola mundo desde java");
+        System.out.println("//////////////////////////////////////////");
+        System.out.println("Factorial de un número");
+        System.out.println(FactorialEntero.factorial(5));
+        System.out.println(FactorialEntero.factorialV2(5));
     }
 }
