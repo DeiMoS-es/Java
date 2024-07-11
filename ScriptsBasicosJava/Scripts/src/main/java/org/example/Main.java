@@ -29,5 +29,14 @@ public class Main {
         System.out.println("//////////////////////////////////////////");
         System.out.println("Arreglo ordenado por método de selección");
         Ordenacion.printArray(arr3);
+        System.out.println("//////////////////////////////////////////");
+        System.out.println("Cambiando el inicio de las palabras");
+        CambiarInicioPalabras.cambiarInicioPalabras("hola mundo desde java");
+        System.out.println("//////////////////////////////////////////");
+        System.out.println("Contando letras");
+        System.out.println(OperacionesString.contarLetra("e"));
+        System.out.println("//////////////////////////////////////////");
+        System.out.println("Palabra más repetida");
+        System.out.println(OperacionesString.palabraMasRepetida("hola mundo hola hola mundo mundo mundo hola hola"));
     }
 }
