@@ -25,7 +25,7 @@ public class BusquedaBinaria {
             }
         }
         return -1; // Si no se encuentra el número en el arreglo. Devolvemos -1.
-    };
+    }
 
     public static int busquedaBinariaV2(int arr[]){
         int posicionInicial = 0;

@@ -24,7 +24,7 @@ public class Main {
         }
         // Ordenación de array
         // Método de la burbuja
-        int[] arr2 = {64, 34, 25, 12, 22, 11, 90};
+        int[] arr2 = {64, 34, 25, 12, 22, 90, 11};
         Ordenacion.bubbleSort(arr2);
         System.out.println("//////////////////////////////////////////");
         System.out.println("Arreglo ordenado por método de la burbuja");
@@ -51,5 +51,11 @@ public class Main {
         System.out.println("Factorial de un número");
         System.out.println(FactorialEntero.factorial(5));
         System.out.println(FactorialEntero.factorialV2(5));
+        System.out.println("//////////////////////////////////////////");
+        System.out.println("Matrices");
+        int[][] matrizA = {{1, 2, 3}, {4, 5, 6}};
+        int[][] matrizB = {{7, 8}, {9, 10}, {11, 12}};
+        int[][] matrizResultado = Matrices.multiplicaciónMatrices(matrizA, matrizB);
+        Matrices.imprimirMatriz(matrizResultado);
     }
 }
