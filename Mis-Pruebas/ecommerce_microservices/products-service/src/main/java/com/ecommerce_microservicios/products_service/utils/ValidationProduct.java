@@ -12,7 +12,7 @@ public class ValidationProduct {
 
     private static void validarSku(String productSku) {
         if(productSku == null){
-            throw new RuntimeException("El sku no puede ser nulo");
+            throw new RuntimeException("El productSku no puede ser nulo");
         }
         if(productSku.isEmpty()){
             throw new RuntimeException("El sku no puede estar vacío");

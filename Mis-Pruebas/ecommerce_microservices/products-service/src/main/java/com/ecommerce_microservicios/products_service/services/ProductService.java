@@ -11,4 +11,5 @@ public interface ProductService {
     void addProduct(ProductRequest productRequest);
     List<ProductResponse> listarAllProducts();
     ProductResponse getProductById(Long id);
+    void deleteProduct(Long id);
 }

@@ -60,6 +60,17 @@ public class ProductServiceImpl implements ProductService {
         return product.map(this::mapToProductResponse).orElse(null);
     }
 
+    @Override
+    public void deleteProduct(Long id) {
+        Optional<Product> product = this.productRepository.findById(id);
+        if(product.isPresent()){
+            productRepository.deleteById(id);
+            MensajesEstado.mensajeConfirmacion("Producto eliminado correctamente");
+        }else{
+            throw new ProductException("El producto con id: " + id + " no existe.");
+        }
+    }
+
     private ProductResponse mapToProductResponse(Product product) {
         return ProductResponse.builder()
                 .productId(product.getProductId())
