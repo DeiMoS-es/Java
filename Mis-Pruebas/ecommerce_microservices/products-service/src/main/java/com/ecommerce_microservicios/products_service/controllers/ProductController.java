@@ -30,4 +30,12 @@ public class ProductController {
         List<ProductResponse> products = this.productService.listarAllProducts();
         return ResponseEntity.ok(products);
     }
+    @GetMapping("/find/{id}")
+    public ResponseEntity<?> getProductById(@PathVariable Long id){
+        ProductResponse product = this.productService.getProductById(id);
+        if(product == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El producto con id: " + id + " no existe");
+        }
+        return ResponseEntity.ok(product);
+    }
 }

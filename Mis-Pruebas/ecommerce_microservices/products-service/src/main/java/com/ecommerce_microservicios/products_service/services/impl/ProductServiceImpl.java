@@ -52,6 +52,14 @@ public class ProductServiceImpl implements ProductService {
         return products.stream().map(this::mapToProductResponse).toList();
     }
 
+    @Override
+    public ProductResponse getProductById(Long id) {
+        Optional<Product> product = this.productRepository.findById(id);
+        // si product contiene un valor, aplica la función mapToProductResponse de esa manera
+        // transformamos el Optional<Product> en un Optional<ProductResponse>.Y si no, devuelve null
+        return product.map(this::mapToProductResponse).orElse(null);
+    }
+
     private ProductResponse mapToProductResponse(Product product) {
         return ProductResponse.builder()
                 .productId(product.getProductId())
